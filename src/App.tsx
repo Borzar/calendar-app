@@ -1,10 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter } from 'react-router-dom';
+import { AppRouter } from './router';
 
 function App() {
   return (
-    <div>sdfkas</div> 
-  )
+    <>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
