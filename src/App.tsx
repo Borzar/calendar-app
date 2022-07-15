@@ -4,9 +4,9 @@ import { AppRouter } from './router';
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
     </>
   );
 }
