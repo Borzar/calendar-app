@@ -1,11 +1,11 @@
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { addHours } from 'date-fns';
-import { NavbarApp } from '../components';
+import { CalendarEvent, NavbarApp } from '../components';
 import { AppShell } from '@mantine/core';
 import { localizer } from '../../helpers';
 
-const eventos = [
+const events = [
   {
     title: 'Cumpleaños',
     notes: 'comprar cosas',
@@ -40,11 +40,14 @@ export const CalendarPage = () => {
     <AppShell header={<NavbarApp />}>
       <Calendar
         localizer={localizer}
-        events={eventos}
+        events={events}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 'calc( 100vh - 80px)' }}
         eventPropGetter={eventStyleGetter}
+        components={{
+          event: CalendarEvent,
+        }}
       />
     </AppShell>
   );
