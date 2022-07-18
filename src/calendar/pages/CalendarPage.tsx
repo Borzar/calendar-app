@@ -1,14 +1,14 @@
 import { Calendar } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { addHours } from 'date-fns';
-import { CalendarEvent, NavbarApp } from '../components';
+import { CalendarEvent, CalendarModal, NavbarApp } from '../components';
 import { AppShell } from '@mantine/core';
 import { localizer } from '../../helpers';
 
 const events = [
   {
     title: 'Cumpleaños',
-    notes: 'comprar cosas',
+    notes: 'Comprar cosas',
     start: new Date(),
     end: addHours(new Date(), 2),
     bgColor: '#E3FAFC',
@@ -36,6 +36,19 @@ export const CalendarPage = () => {
     };
   };
 
+  const onDoubleClickEvent = (event:any) => {
+    console.log({ MyDoubleClickEvent: event })
+  }
+
+  const onSelect = (event:any) => {
+    console.log({ MyOnSelectEvent: event })
+  }
+
+  const onViewChange = (event:any) => {
+    console.log({MyOnViewChange: event})
+  }
+
+
   return (
     <AppShell header={<NavbarApp />}>
       <Calendar
@@ -48,7 +61,11 @@ export const CalendarPage = () => {
         components={{
           event: CalendarEvent,
         }}
+        onDoubleClickEvent={onDoubleClickEvent}
+        onSelectEvent={onSelect}
+        onView={onViewChange}
       />
+      <CalendarModal />
     </AppShell>
   );
 };
