@@ -6,6 +6,8 @@ import { DatePicker, TimeInput } from '@mantine/dates';
 import { TextInput, Button, Box, Group } from '@mantine/core';
 
 export const CalendarModal = () => {
+  const [errorDate, setDateError] = useState(false);
+  const [errorTitle, setTitleError] = useState(false);
   const [open, setOpen] = useState(true);
   const [formValues, setFormValues] = useState({
     start: new Date(),
@@ -33,19 +35,19 @@ export const CalendarModal = () => {
     );
 
     if (isNaN(differenceTime) || differenceTime <= 0) {
-      console.log('error en fechas');
+      setDateError(true);
       return;
     }
 
     if (formValues.title.length <= 0) {
-      console.log('debe ingresar un titulo');
+      setTitleError(true);
       return;
     }
 
-    console.log(formValues)
+    console.log(formValues);
   };
+
   const onClose = () => {
-    console.log('cerrando');
     setOpen(false);
   };
 
@@ -60,6 +62,7 @@ export const CalendarModal = () => {
               label="Start date"
               value={formValues.start}
               onChange={(event) => onDateChanged(event, 'start')}
+              error={errorDate && 'error'}
               required
             />
             <DatePicker
@@ -69,6 +72,7 @@ export const CalendarModal = () => {
               value={formValues.end}
               onChange={(event) => onDateChanged(event, 'end')}
               minDate={formValues.start}
+              error={errorDate && 'error'}
               required
             />
             <TimeInput
@@ -76,6 +80,7 @@ export const CalendarModal = () => {
               label="Pick time start"
               value={formValues.start}
               onChange={(event) => onDateChanged(event, 'start')}
+              error={errorDate && 'error'}
               required
             />
             <TimeInput
@@ -83,6 +88,7 @@ export const CalendarModal = () => {
               label="Pick time end"
               value={formValues.end}
               onChange={(event) => onDateChanged(event, 'end')}
+              error={errorDate && 'error'}
               required
             />
             <TextInput
@@ -91,6 +97,7 @@ export const CalendarModal = () => {
               name="title"
               value={formValues.title}
               onChange={onInputChange}
+              error={errorTitle && 'error in title'}
             />
 
             <Textarea
