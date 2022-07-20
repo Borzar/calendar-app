@@ -55,7 +55,7 @@
       "last 1 safari version"
     ]
   },
-  "Prettier": {
+  "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
     "semi": false,

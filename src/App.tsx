@@ -1,6 +1,6 @@
-import { BrowserRouter } from 'react-router-dom';
-import { AppRouter } from './router';
-import { MantineProvider } from '@mantine/core';
+import { BrowserRouter } from 'react-router-dom'
+import { AppRouter } from './router'
+import { MantineProvider } from '@mantine/core'
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
         </BrowserRouter>
       </MantineProvider>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
