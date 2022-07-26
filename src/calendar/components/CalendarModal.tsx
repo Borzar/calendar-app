@@ -1,19 +1,32 @@
 import { useState } from 'react'
 import { Calendar, Clock } from 'tabler-icons-react'
 import { addHours, differenceInSeconds } from 'date-fns'
-import { Modal, Textarea } from '@mantine/core'
+import { Modal, Textarea, TextInput, Button, Box, Group } from '@mantine/core'
 import { DatePicker, TimeInput } from '@mantine/dates'
-import { TextInput, Button, Box, Group } from '@mantine/core'
 
-export const CalendarModal = ({ viewModalComp, setViewModal }: any) => {
+export const CalendarModal = ({
+  tempEvent,
+  viewModalComp,
+  setViewModal,
+}: any) => {
   const [errorDate, setDateError] = useState(false)
   const [errorTitle, setTitleError] = useState(false)
   const [formValues, setFormValues] = useState({
+    title: '',
+    notes: '',
     start: new Date(),
     end: addHours(new Date(), 1),
-    title: 'Boris',
-    notes: 'notes',
   })
+
+  //useEffect(() => {
+  //if (initialEvent !== null) {
+  //setFormValues({
+  //...initialEvent,
+  //[tempEvent.title]: formValues.title,
+  //[tempEvent.notes]: formValues.notes,
+  //}  )
+  //}
+  //}, [initialEvent])
 
   const onInputChange = ({ target }: { target: any }) => {
     setFormValues({
@@ -39,8 +52,6 @@ export const CalendarModal = ({ viewModalComp, setViewModal }: any) => {
       setTitleError(true)
       return
     }
-
-    console.log(formValues)
   }
 
   return (
@@ -54,44 +65,38 @@ export const CalendarModal = ({ viewModalComp, setViewModal }: any) => {
           <form onSubmit={onSubmit}>
             <DatePicker
               icon={<Calendar />}
-              placeholder='Start date'
-              label='Start date'
-              value={formValues.start}
+              value={tempEvent.start}
               onChange={(event) => onDateChanged(event, 'start')}
+              label='Start date'
               error={errorDate && 'error'}
               required
+            />
+            <TimeInput
+              icon={<Clock />}
+              label='Time start'
+              value={tempEvent.start}
+              error={errorDate && 'error'}
             />
             <DatePicker
               icon={<Calendar />}
-              placeholder='End date'
-              label='End date'
-              value={formValues.end}
+              value={tempEvent.end}
               onChange={(event) => onDateChanged(event, 'end')}
               minDate={formValues.start}
+              label='End date'
               error={errorDate && 'error'}
               required
             />
             <TimeInput
               icon={<Clock />}
-              label='Pick time start'
-              value={formValues.start}
-              onChange={(event) => onDateChanged(event, 'start')}
+              label='Time end'
+              value={tempEvent.end}
               error={errorDate && 'error'}
-              required
-            />
-            <TimeInput
-              icon={<Clock />}
-              label='Pick time end'
-              value={formValues.end}
-              onChange={(event) => onDateChanged(event, 'end')}
-              error={errorDate && 'error'}
-              required
             />
             <TextInput
               label='Title'
               placeholder='Title'
               name='title'
-              value={formValues.title}
+              value={tempEvent.title}
               onChange={onInputChange}
               error={errorTitle && 'error in title'}
             />
@@ -101,7 +106,7 @@ export const CalendarModal = ({ viewModalComp, setViewModal }: any) => {
               placeholder='Notes'
               mt='sm'
               name='notes'
-              value={formValues.notes}
+              value={tempEvent.notes}
               onChange={onInputChange}
             />
             <Group position='left' mt='md'>

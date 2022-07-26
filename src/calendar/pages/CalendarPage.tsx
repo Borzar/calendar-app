@@ -1,26 +1,13 @@
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { addHours } from 'date-fns'
 import { CalendarEvent, CalendarModal, NavbarApp } from '../components'
 import { AppShell } from '@mantine/core'
 import { localizer } from '../../helpers'
 import { useState } from 'react'
-
-const events = [
-  {
-    title: 'Cumpleaños',
-    notes: 'Comprar cosas',
-    start: new Date(),
-    end: addHours(new Date(), 2),
-    bgColor: '#E3FAFC',
-    user: {
-      _id: '123',
-      name: 'Boris',
-    },
-  },
-]
+import { useCalendarEvents } from '../../hooks'
 
 export const CalendarPage = () => {
+  const { tempEvent, initialEvent, onInitialEvent }: any = useCalendarEvents()
   const [viewModal, setViewModal] = useState(false)
   const eventStyleGetter: any = (
     event: any,
@@ -29,7 +16,7 @@ export const CalendarPage = () => {
     isSelected: any
   ) => {
     const style = {
-      backgroundColor: '#22B8CF',
+      backgroundColor: '#A5D8FF',
       color: 'black',
     }
 
@@ -38,12 +25,12 @@ export const CalendarPage = () => {
     }
   }
 
-  const onDoubleClickEvent = () => {
+  const onDoubleClickEvent = (event: any) => {
     setViewModal(true)
   }
 
   const onSelect = (event: any) => {
-    console.log({ MyOnSelectEvent: event })
+    onInitialEvent([event])
   }
 
   const onViewChange = (event: any) => {
@@ -54,19 +41,25 @@ export const CalendarPage = () => {
     <AppShell header={<NavbarApp />}>
       <Calendar
         localizer={localizer}
-        events={events}
+        events={initialEvent}
         startAccessor='start'
         endAccessor='end'
         style={{ height: 'calc( 100vh - 80px)' }}
         eventPropGetter={eventStyleGetter}
         components={{
-          event: CalendarEvent,
+         event: CalendarEvent,
         }}
         onDoubleClickEvent={onDoubleClickEvent}
         onSelectEvent={onSelect}
         onView={onViewChange}
       />
-      <CalendarModal viewModalComp={viewModal} setViewModal={setViewModal} />
+      <CalendarModal
+        tempEvent={tempEvent} 
+        initialEvent={initialEvent}
+        viewModalComp={viewModal}
+        setViewModal={setViewModal}
+        
+      />
     </AppShell>
   )
 }
