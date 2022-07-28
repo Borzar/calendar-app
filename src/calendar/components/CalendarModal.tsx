@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Calendar, Clock } from 'tabler-icons-react'
 import { addHours, differenceInSeconds } from 'date-fns'
 import { Modal, Textarea, TextInput, Button, Box, Group } from '@mantine/core'
 import { DatePicker, TimeInput } from '@mantine/dates'
+import { useCalendarEvents } from '../../hooks'
 
 export const CalendarModal = ({
   tempEvent,
@@ -12,26 +13,21 @@ export const CalendarModal = ({
   const [errorDate, setDateError] = useState(false)
   const [errorTitle, setTitleError] = useState(false)
   const [formValues, setFormValues] = useState({
-    title: '',
+    title: 'asfasf',
     notes: '',
     start: new Date(),
     end: addHours(new Date(), 1),
   })
 
-  //useEffect(() => {
-  //if (initialEvent !== null) {
-  //setFormValues({
-  //...initialEvent,
-  //[tempEvent.title]: formValues.title,
-  //[tempEvent.notes]: formValues.notes,
-  //}  )
-  //}
-  //}, [initialEvent])
+  useEffect(() => {
+    setFormValues({ ...tempEvent })
+  }
+  , [tempEvent])
 
   const onInputChange = ({ target }: { target: any }) => {
     setFormValues({
       ...formValues,
-      [target.name]: target.value,
+      [target.name]: target.value, //  OBJECT !!!
     })
   }
 
@@ -65,7 +61,7 @@ export const CalendarModal = ({
           <form onSubmit={onSubmit}>
             <DatePicker
               icon={<Calendar />}
-              value={tempEvent.start}
+              value={formValues.start}
               onChange={(event) => onDateChanged(event, 'start')}
               label='Start date'
               error={errorDate && 'error'}
@@ -74,14 +70,14 @@ export const CalendarModal = ({
             <TimeInput
               icon={<Clock />}
               label='Time start'
-              value={tempEvent.start}
+              value={formValues.start}
               error={errorDate && 'error'}
             />
             <DatePicker
               icon={<Calendar />}
-              value={tempEvent.end}
+              value={formValues.end}
               onChange={(event) => onDateChanged(event, 'end')}
-              minDate={formValues.start}
+              minDate={formValues.end}
               label='End date'
               error={errorDate && 'error'}
               required
@@ -89,14 +85,14 @@ export const CalendarModal = ({
             <TimeInput
               icon={<Clock />}
               label='Time end'
-              value={tempEvent.end}
+              value={formValues.end}
               error={errorDate && 'error'}
             />
             <TextInput
               label='Title'
               placeholder='Title'
               name='title'
-              value={tempEvent.title}
+              value={formValues.title}
               onChange={onInputChange}
               error={errorTitle && 'error in title'}
             />
@@ -106,7 +102,7 @@ export const CalendarModal = ({
               placeholder='Notes'
               mt='sm'
               name='notes'
-              value={tempEvent.notes}
+              value={formValues.notes}
               onChange={onInputChange}
             />
             <Group position='left' mt='md'>

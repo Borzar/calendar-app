@@ -15,8 +15,6 @@ const tempEvent = {
 }
 
 export const useCalendarEvents = () => {
-
-  
   const [initialEvent, setInitialEvent] = useState([tempEvent])
 
   const onInitialEvent = (event: any) => {
@@ -27,5 +25,6 @@ export const useCalendarEvents = () => {
     tempEvent,
     initialEvent,
     onInitialEvent,
+    setInitialEvent,
   }
 }

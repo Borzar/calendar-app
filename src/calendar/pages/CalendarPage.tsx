@@ -1,6 +1,11 @@
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { CalendarEvent, CalendarModal, NavbarApp } from '../components'
+import {
+  AddNewButton,
+  CalendarEvent,
+  CalendarModal,
+  NavbarApp,
+} from '../components'
 import { AppShell } from '@mantine/core'
 import { localizer } from '../../helpers'
 import { useState } from 'react'
@@ -39,6 +44,7 @@ export const CalendarPage = () => {
 
   return (
     <AppShell header={<NavbarApp />}>
+      <AddNewButton setViewModal={setViewModal} />
       <Calendar
         localizer={localizer}
         events={initialEvent}
@@ -47,18 +53,17 @@ export const CalendarPage = () => {
         style={{ height: 'calc( 100vh - 80px)' }}
         eventPropGetter={eventStyleGetter}
         components={{
-         event: CalendarEvent,
+          event: CalendarEvent,
         }}
         onDoubleClickEvent={onDoubleClickEvent}
         onSelectEvent={onSelect}
         onView={onViewChange}
       />
       <CalendarModal
-        tempEvent={tempEvent} 
+        tempEvent={tempEvent}
         initialEvent={initialEvent}
         viewModalComp={viewModal}
         setViewModal={setViewModal}
-        
       />
     </AppShell>
   )
