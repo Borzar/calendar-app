@@ -4,16 +4,15 @@ import { addHours, differenceInSeconds } from 'date-fns'
 import { Modal, Textarea, TextInput, Button, Box, Group } from '@mantine/core'
 import { DatePicker, TimeInput } from '@mantine/dates'
 import { useCalendarEvents } from '../../hooks'
+import {AddModalButton} from './AddModalButton'
 
-export const CalendarModal = ({
-  tempEvent,
-  viewModalComp,
-  setViewModal,
-}: any) => {
+export const CalendarModal = ({ viewModalComp, setViewModal }: any) => {
+
+  const { tempEvent, newEvent } = useCalendarEvents()
   const [errorDate, setDateError] = useState(false)
   const [errorTitle, setTitleError] = useState(false)
   const [formValues, setFormValues] = useState({
-    title: 'asfasf',
+    title: '',
     notes: '',
     start: new Date(),
     end: addHours(new Date(), 1),
@@ -21,8 +20,12 @@ export const CalendarModal = ({
 
   useEffect(() => {
     setFormValues({ ...tempEvent })
-  }
-  , [tempEvent])
+  }, [tempEvent])
+
+  //useEffect(() => {
+    //setFormValues({ ...newEvent})
+  //}, [newEvent])
+
 
   const onInputChange = ({ target }: { target: any }) => {
     setFormValues({
@@ -57,6 +60,7 @@ export const CalendarModal = ({
         onClose={() => setViewModal(false)}
         title='New Event'
       >
+        <AddModalButton setFormValues={setFormValues} />
         <Box sx={{ maxWidth: 340 }} mx='auto'>
           <form onSubmit={onSubmit}>
             <DatePicker

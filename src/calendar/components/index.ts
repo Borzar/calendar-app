@@ -1,4 +1,4 @@
 export * from './NavbarApp'
 export * from './CalendarEvent'
 export * from './CalendarModal'
-export * from './AddNewButton'
+export * from './AddModalButton'

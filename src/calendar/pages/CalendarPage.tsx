@@ -1,7 +1,7 @@
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {
-  AddNewButton,
+  AddModalButton,
   CalendarEvent,
   CalendarModal,
   NavbarApp,
@@ -12,7 +12,7 @@ import { useState } from 'react'
 import { useCalendarEvents } from '../../hooks'
 
 export const CalendarPage = () => {
-  const { tempEvent, initialEvent, onInitialEvent }: any = useCalendarEvents()
+  const { initialEvent, onInitialEvent }: any = useCalendarEvents()
   const [viewModal, setViewModal] = useState(false)
   const eventStyleGetter: any = (
     event: any,
@@ -44,7 +44,6 @@ export const CalendarPage = () => {
 
   return (
     <AppShell header={<NavbarApp />}>
-      <AddNewButton setViewModal={setViewModal} />
       <Calendar
         localizer={localizer}
         events={initialEvent}
@@ -60,8 +59,6 @@ export const CalendarPage = () => {
         onView={onViewChange}
       />
       <CalendarModal
-        tempEvent={tempEvent}
-        initialEvent={initialEvent}
         viewModalComp={viewModal}
         setViewModal={setViewModal}
       />
