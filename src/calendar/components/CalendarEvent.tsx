@@ -1,10 +1,12 @@
-export const CalendarEvent = ({ event }: { event: any }) => {
-  const { title, user } = event
+export const CalendarEvent = ({ event }: any) => {
+  const { title, notes } = event
 
+  // sin uso por el momento
+  
   return (
     <>
       <strong>{title}</strong>
-      <span> - {user.name}</span>
+      <strong> - {notes}</strong>
     </>
   )
 }

@@ -1,119 +1,71 @@
-import { useState, useEffect } from 'react'
-import { Calendar, Clock } from 'tabler-icons-react'
-import { addHours, differenceInSeconds } from 'date-fns'
-import { Modal, Textarea, TextInput, Button, Box, Group } from '@mantine/core'
-import { DatePicker, TimeInput } from '@mantine/dates'
+import { useState } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import { addHours } from 'date-fns'
 import { useCalendarEvents } from '../../hooks'
-import {AddModalButton} from './AddModalButton'
+import { Modal, Textarea, TextInput, Button, Box } from '@mantine/core'
 
-export const CalendarModal = ({ viewModalComp, setViewModal }: any) => {
-
-  const { tempEvent, newEvent } = useCalendarEvents()
-  const [errorDate, setDateError] = useState(false)
-  const [errorTitle, setTitleError] = useState(false)
-  const [formValues, setFormValues] = useState({
-    title: '',
-    notes: '',
+export const CalendarModal = ({ openModal, setOpenModal }: any) => {
+  const { initialEvent, setInitialEvent }: any = useCalendarEvents()
+  const [formValues, setFormValues]: any = useState({
+    title: 'new title here...',
+    notes: 'new notes here...',
     start: new Date(),
     end: addHours(new Date(), 1),
   })
 
-  useEffect(() => {
-    setFormValues({ ...tempEvent })
-  }, [tempEvent])
-
-  //useEffect(() => {
-    //setFormValues({ ...newEvent})
-  //}, [newEvent])
-
-
-  const onInputChange = ({ target }: { target: any }) => {
-    setFormValues({
-      ...formValues,
-      [target.name]: target.value, //  OBJECT !!!
-    })
-  }
-
-  const onDateChanged = (event: any, changing: any) => {
-    setFormValues({ ...formValues, [changing]: event })
-  }
-
   const onSubmit = (e: any) => {
     e.preventDefault()
-    const differenceTime = differenceInSeconds(formValues.end, formValues.start)
-
-    if (isNaN(differenceTime) || differenceTime <= 0) {
-      setDateError(true)
-      return
-    }
-
-    if (formValues.title.length <= 0) {
-      setTitleError(true)
-      return
-    }
+    setInitialEvent([...initialEvent, formValues])
+    console.log(initialEvent)
   }
+
+  //ocupar un useEffect para mostrar el evento del calendario para editar
 
   return (
     <>
       <Modal
-        opened={viewModalComp}
-        onClose={() => setViewModal(false)}
-        title='New Event'
+        opened={openModal}
+        onClose={() => setOpenModal(false)}
+        title='Edit Event'
       >
-        <AddModalButton setFormValues={setFormValues} />
-        <Box sx={{ maxWidth: 340 }} mx='auto'>
-          <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
+          <Box sx={{ maxWidth: 340 }} mx='auto'>
             <DatePicker
-              icon={<Calendar />}
-              value={formValues.start}
-              onChange={(event) => onDateChanged(event, 'start')}
-              label='Start date'
-              error={errorDate && 'error'}
+              selected={formValues.start}
+              onChange={(start) => setFormValues({ ...formValues, start })}
               required
             />
-            <TimeInput
-              icon={<Clock />}
-              label='Time start'
-              value={formValues.start}
-              error={errorDate && 'error'}
-            />
             <DatePicker
-              icon={<Calendar />}
-              value={formValues.end}
-              onChange={(event) => onDateChanged(event, 'end')}
+              selected={formValues.end}
+              onChange={(end) => setFormValues({ ...formValues, end })}
               minDate={formValues.end}
-              label='End date'
-              error={errorDate && 'error'}
               required
-            />
-            <TimeInput
-              icon={<Clock />}
-              label='Time end'
-              value={formValues.end}
-              error={errorDate && 'error'}
             />
             <TextInput
               label='Title'
               placeholder='Title'
               name='title'
               value={formValues.title}
-              onChange={onInputChange}
-              error={errorTitle && 'error in title'}
+              onChange={(e) =>
+                setFormValues({ ...formValues, title: e.target.value })
+              }
             />
-
             <Textarea
               label='Notes'
               placeholder='Notes'
               mt='sm'
               name='notes'
               value={formValues.notes}
-              onChange={onInputChange}
+              onChange={(e) =>
+                setFormValues({ ...formValues, notes: e.target.value })
+              }
             />
-            <Group position='left' mt='md'>
-              <Button type='submit'>Save</Button>
-            </Group>
-          </form>
-        </Box>
+            <Button mt={16} type='submit'>
+              edit
+            </Button>
+          </Box>
+        </form>
       </Modal>
     </>
   )
