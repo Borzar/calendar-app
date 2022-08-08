@@ -1,26 +1,16 @@
-import { useState } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { addHours } from 'date-fns'
 import { useCalendarEvents } from '../../hooks'
 import { Modal, Textarea, TextInput, Button, Box } from '@mantine/core'
 
-export const CalendarModal = ({ openModal, setOpenModal }: any) => {
+export const CalendarModal = ({ formValues, setFormValues, openModal, setOpenModal }: any) => {
   const { initialEvent, setInitialEvent }: any = useCalendarEvents()
-  const [formValues, setFormValues]: any = useState({
-    title: 'new title here...',
-    notes: 'new notes here...',
-    start: new Date(),
-    end: addHours(new Date(), 1),
-  })
 
-  const onSubmit = (e: any) => {
+  const onEditEvent = (e: any) => {
     e.preventDefault()
     setInitialEvent([...initialEvent, formValues])
     console.log(initialEvent)
   }
-
-  //ocupar un useEffect para mostrar el evento del calendario para editar
 
   return (
     <>
@@ -29,7 +19,7 @@ export const CalendarModal = ({ openModal, setOpenModal }: any) => {
         onClose={() => setOpenModal(false)}
         title='Edit Event'
       >
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onEditEvent}>
           <Box sx={{ maxWidth: 340 }} mx='auto'>
             <DatePicker
               selected={formValues.start}

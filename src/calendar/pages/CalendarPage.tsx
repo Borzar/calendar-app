@@ -3,10 +3,17 @@ import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import DatePicker from 'react-datepicker'
 import { addHours } from 'date-fns'
-import { CalendarModal, NavbarApp } from '../components'
+import { CalendarModal, NavbarApp, NavBar } from '../components'
 import { localizer } from '../../helpers'
 import { useCalendarEvents } from '../../hooks'
-import { AppShell, Box, Button, Textarea, TextInput } from '@mantine/core'
+import {
+  AppShell,
+  Box,
+  Button,
+  Textarea,
+  TextInput,
+  Collapse,
+} from '@mantine/core'
 
 const eventStyleGetter: any = (
   event: any,
@@ -26,6 +33,7 @@ const eventStyleGetter: any = (
 
 export const CalendarPage = () => {
   const { setInitialEvent, initialEvent }: any = useCalendarEvents()
+  const [openedCollapse, setOpenedCollapse] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [formValues, setFormValues]: any = useState({
     title: '',
@@ -35,6 +43,7 @@ export const CalendarPage = () => {
   })
 
   const onDoubleClickEvent = (event: any) => {
+    setFormValues({...event })
     setOpenModal(true)
     console.log({ onDoubleClickEvent: event })
   }
@@ -47,53 +56,73 @@ export const CalendarPage = () => {
     console.log({ MyOnViewChange: event })
   }
 
-  const onSubmit = (e: any) => {
+  const onSubmitNewEvent = (e: any) => {
     e.preventDefault()
     setInitialEvent([...initialEvent, formValues])
+    setOpenedCollapse(false)
     console.log(initialEvent)
   }
   return (
-    <AppShell header={<NavbarApp />}>
-      <CalendarModal openModal={openModal} setOpenModal={setOpenModal} />
-      <form onSubmit={onSubmit}>
-        <Box sx={{ maxWidth: 340 }} mx='auto'>
-          <DatePicker
-            selected={formValues.start}
-            onChange={(start) => setFormValues({ ...formValues, start })}
-            required
-            showTimeSelect
-            dateFormat='Pp'
-          />
-          <DatePicker
-            selected={formValues.end}
-            onChange={(end) => setFormValues({ ...formValues, end })}
-            minDate={formValues.end}
-            required
-            showTimeSelect
-            dateFormat='Pp'
-          />
-          <TextInput
-            label='Title'
-            placeholder='Title'
-            name='title'
-            value={formValues.title}
-            onChange={(e) =>
-              setFormValues({ ...formValues, title: e.target.value })
-            }
-          />
-          <Textarea
-            label='Notes'
-            placeholder='Notes'
-            mt='sm'
-            name='notes'
-            value={formValues.notes}
-            onChange={(e) =>
-              setFormValues({ ...formValues, notes: e.target.value })
-            }
-          />
-          <Button type='submit'>Save</Button>
-        </Box>
-      </form>
+    <AppShell
+      header={<NavbarApp />}
+      navbar={
+        <NavBar width={{ base: 300 }} height={500} p='xs'>
+          <Button onClick={() => setOpenedCollapse((o) => !o)}>
+            Add event
+          </Button>
+          <Collapse in={openedCollapse} transitionDuration={500}>
+            <form onSubmit={onSubmitNewEvent}>
+              <Box>
+                <DatePicker
+                  selected={formValues.start}
+                  onChange={(start) => setFormValues({ ...formValues, start })}
+                  required
+                  showTimeSelect
+                  dateFormat='Pp'
+                />
+                <DatePicker
+                  selected={formValues.end}
+                  onChange={(end) => setFormValues({ ...formValues, end })}
+                  minDate={formValues.end}
+                  required
+                  showTimeSelect
+                  dateFormat='Pp'
+                />
+                <TextInput
+                  label='Title'
+                  placeholder='Title'
+                  name='title'
+                  required
+                  value={formValues.title}
+                  onChange={(e) =>
+                    setFormValues({ ...formValues, title: e.target.value })
+                  }
+                />
+                <Textarea
+                  label='Notes'
+                  placeholder='Notes'
+                  mt='sm'
+                  name='notes'
+                  value={formValues.notes}
+                  onChange={(e) =>
+                    setFormValues({ ...formValues, notes: e.target.value })
+                  }
+                />
+                <Button type='submit'>Save</Button>
+              </Box>
+            </form>
+          </Collapse>
+        </NavBar>
+      }
+    >
+      <CalendarModal
+        formValues={formValues}
+        setFormValues={setFormValues}
+        initialEvent={initialEvent}
+        setInitialEvent={setInitialEvent}
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+      />
       <Calendar
         localizer={localizer}
         events={initialEvent}
