@@ -43,9 +43,8 @@ export const CalendarPage = () => {
   })
 
   const onDoubleClickEvent = (event: any) => {
-    setFormValues({...event })
+    setFormValues({ ...event })
     setOpenModal(true)
-    console.log({ onDoubleClickEvent: event })
   }
 
   const onSelect = (event: any) => {
@@ -60,7 +59,6 @@ export const CalendarPage = () => {
     e.preventDefault()
     setInitialEvent([...initialEvent, formValues])
     setOpenedCollapse(false)
-    console.log(initialEvent)
   }
   return (
     <AppShell
@@ -122,6 +120,7 @@ export const CalendarPage = () => {
         setInitialEvent={setInitialEvent}
         openModal={openModal}
         setOpenModal={setOpenModal}
+        onDoubleClickEvent={onDoubleClickEvent}
       />
       <Calendar
         localizer={localizer}

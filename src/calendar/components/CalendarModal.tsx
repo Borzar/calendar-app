@@ -2,15 +2,36 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { useCalendarEvents } from '../../hooks'
 import { Modal, Textarea, TextInput, Button, Box } from '@mantine/core'
+import { useEffect, useState } from 'react'
+import { addHours } from 'date-fns/esm'
 
-export const CalendarModal = ({ formValues, setFormValues, openModal, setOpenModal }: any) => {
+export const CalendarModal = ({
+  formValues,
+  openModal,
+  setOpenModal,
+  onDoubleClickEvent,
+}: any) => {
   const { initialEvent, setInitialEvent }: any = useCalendarEvents()
+  const [editForm, setEditForm]: any = useState({
+    title: '',
+    notes: '',
+    start: new Date(),
+    end: addHours(new Date(), 1),
+  })
+  const [editStartDate, setEditStartDate] = useState()
+  const [editEndDate, setEditEndDate] = useState()
+  const [editTitle, setEditTitle] = useState()
+  const [editNotes, setEditNotes] = useState()
 
-  const onEditEvent = (e: any) => {
-    e.preventDefault()
-    setInitialEvent([...initialEvent, formValues])
-    console.log(initialEvent)
-  }
+  useEffect(() => {
+    setEditForm({ ...formValues })
+  }, [formValues])
+
+  // const onEditEvent = (e: any) => {
+  //   e.preventDefault()
+  //   setInitialEvent([...editForm, initialEvent])
+  // }
+  console.log({ initialEvent }, initialEvent)
 
   return (
     <>
@@ -19,37 +40,41 @@ export const CalendarModal = ({ formValues, setFormValues, openModal, setOpenMod
         onClose={() => setOpenModal(false)}
         title='Edit Event'
       >
-        <form onSubmit={onEditEvent}>
+        <form>
           <Box sx={{ maxWidth: 340 }} mx='auto'>
-            <DatePicker
+            {/* <DatePicker
               selected={formValues.start}
-              onChange={(start) => setFormValues({ ...formValues, start })}
+              onChange={(e: any) =>
+                setFormValues({ ...formValues, start: e.target.value })
+              }
+              showTimeSelect
+              dateFormat='Pp'
               required
             />
             <DatePicker
               selected={formValues.end}
-              onChange={(end) => setFormValues({ ...formValues, end })}
+              onChange={(e: any) =>
+                setFormValues({ ...formValues, end: e.target.value })
+              }
               minDate={formValues.end}
+              showTimeSelect
+              dateFormat='Pp'
               required
-            />
+            /> */}
             <TextInput
               label='Title'
               placeholder='Title'
               name='title'
-              value={formValues.title}
-              onChange={(e) =>
-                setFormValues({ ...formValues, title: e.target.value })
-              }
+              value={editForm.title}
+              onChange={(e) => setEditForm(e.target.value)}
             />
             <Textarea
               label='Notes'
               placeholder='Notes'
               mt='sm'
               name='notes'
-              value={formValues.notes}
-              onChange={(e) =>
-                setFormValues({ ...formValues, notes: e.target.value })
-              }
+              value={editForm.notes}
+              onChange={(e) => setEditForm(e.target.value)}
             />
             <Button mt={16} type='submit'>
               edit
