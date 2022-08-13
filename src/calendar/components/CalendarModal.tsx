@@ -18,20 +18,22 @@ export const CalendarModal = ({
     start: new Date(),
     end: addHours(new Date(), 1),
   })
-  const [editStartDate, setEditStartDate] = useState()
-  const [editEndDate, setEditEndDate] = useState()
-  const [editTitle, setEditTitle] = useState()
-  const [editNotes, setEditNotes] = useState()
 
   useEffect(() => {
     setEditForm({ ...formValues })
   }, [formValues])
 
-  // const onEditEvent = (e: any) => {
-  //   e.preventDefault()
-  //   setInitialEvent([...editForm, initialEvent])
-  // }
-  console.log({ initialEvent }, initialEvent)
+  const onEditEvent = (e: any) => {
+    e.preventDefault()
+    setInitialEvent({
+      ...initialEvent,
+      title: editForm.title,
+      notes: editForm.notes,
+    })
+    console.log({ editForm }, editForm)
+  }
+
+  // console.log({ editForm }, editForm)
 
   return (
     <>
@@ -40,23 +42,23 @@ export const CalendarModal = ({
         onClose={() => setOpenModal(false)}
         title='Edit Event'
       >
-        <form>
+        <form onSubmit={onEditEvent}>
           <Box sx={{ maxWidth: 340 }} mx='auto'>
             {/* <DatePicker
-              selected={formValues.start}
+              selected={editForm.start}
               onChange={(e: any) =>
-                setFormValues({ ...formValues, start: e.target.value })
+                setEditForm({ ...editForm, start: e.target.value })
               }
               showTimeSelect
               dateFormat='Pp'
               required
             />
             <DatePicker
-              selected={formValues.end}
+              selected={editForm.end}
               onChange={(e: any) =>
-                setFormValues({ ...formValues, end: e.target.value })
+                setEditForm({ ...editForm, end: e.target.value })
               }
-              minDate={formValues.end}
+              minDate={editForm.end}
               showTimeSelect
               dateFormat='Pp'
               required
@@ -66,7 +68,9 @@ export const CalendarModal = ({
               placeholder='Title'
               name='title'
               value={editForm.title}
-              onChange={(e) => setEditForm(e.target.value)}
+              onChange={(e) =>
+                setEditForm({ ...editForm, title: e.target.value })
+              }
             />
             <Textarea
               label='Notes'
@@ -74,7 +78,9 @@ export const CalendarModal = ({
               mt='sm'
               name='notes'
               value={editForm.notes}
-              onChange={(e) => setEditForm(e.target.value)}
+              onChange={(e) =>
+                setEditForm({ ...editForm, notes: e.target.value })
+              }
             />
             <Button mt={16} type='submit'>
               edit

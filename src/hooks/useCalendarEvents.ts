@@ -11,7 +11,7 @@ const tempEvent = [
     bgColor: '#D0EBFF',
     user: {
       _id: '123',
-      name: 'Boris',
+      name: 'boris',
     },
   },
   {
@@ -23,7 +23,7 @@ const tempEvent = [
     bgColor: '#D0EBFF',
     user: {
       _id: '123',
-      name: 'Boris',
+      name: 'marcelo',
     },
   },
 ]
