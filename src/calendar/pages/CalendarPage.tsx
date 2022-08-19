@@ -48,7 +48,13 @@ export const CalendarPage = () => {
   }
 
   const onSelect = (event: any) => {
-    console.log({ onSelectEvent: event })
+    console.log(event)
+    setOpenedCollapse(true)
+    setFormValues({ ...event })
+    const index = initialEvent.findIndex((x: any) => x.id === formValues.id)
+    const newEventList = [...initialEvent]
+    newEventList.splice(index, 1)
+    setInitialEvent(newEventList)
   }
 
   const onViewChange = (event: any) => {
@@ -60,6 +66,7 @@ export const CalendarPage = () => {
     setInitialEvent([...initialEvent, formValues])
     setOpenedCollapse(false)
   }
+
   return (
     <AppShell
       header={<NavbarApp />}

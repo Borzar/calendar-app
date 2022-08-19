@@ -9,7 +9,6 @@ export const CalendarModal = ({
   formValues,
   openModal,
   setOpenModal,
-  onDoubleClickEvent,
 }: any) => {
   const { initialEvent, setInitialEvent }: any = useCalendarEvents()
   const [editForm, setEditForm]: any = useState({
@@ -33,7 +32,6 @@ export const CalendarModal = ({
     console.log({ editForm }, editForm)
   }
 
-  // console.log({ editForm }, editForm)
 
   return (
     <>
