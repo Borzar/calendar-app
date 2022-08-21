@@ -33,6 +33,7 @@ const eventStyleGetter: any = (
 
 export const CalendarPage = () => {
   const { setInitialEvent, initialEvent }: any = useCalendarEvents()
+  const [edit, setEdit] = useState(false)
   const [openedCollapse, setOpenedCollapse] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [formValues, setFormValues]: any = useState({
@@ -47,12 +48,28 @@ export const CalendarPage = () => {
     setOpenModal(true)
   }
 
-  const onSelect = (event: any) => {
-    console.log(event)
+  // AT WORK
+  const onEditEvent = (event: any) => {
+    // findIndex regresara un booleano
+    // este booleano le indica a findIndex que hemos encontrado el valor.
+    // es decir, la función va a recorrer el arreglo, y comparará los
+    // valores con la búsqueda. Si la función regresa false, seguirá buscando.
+    // si regresa true, se detiene y nos da el índice.
+
+    // el metodo splice cambia el contenido del arreglo eliminando o
+    // sustituyendo los elementos existentes por otros nuevos
+    const newEvent = {
+      id: initialEvent._id,
+      title: initialEvent.title,
+      notes: initialEvent.notes,
+    }
     setOpenedCollapse(true)
+    setEdit(true)
     setFormValues({ ...event })
-    const index = initialEvent.findIndex((x: any) => x.id === formValues.id)
+
+    const index = initialEvent.findIndex((x: any) => x._id === newEvent.id)
     const newEventList = [...initialEvent]
+
     newEventList.splice(index, 1)
     setInitialEvent(newEventList)
   }
@@ -61,10 +78,15 @@ export const CalendarPage = () => {
     console.log({ MyOnViewChange: event })
   }
 
+  const onCancelSubmit = () => {
+    setOpenedCollapse(false)
+  }
+
   const onSubmitNewEvent = (e: any) => {
     e.preventDefault()
     setInitialEvent([...initialEvent, formValues])
     setOpenedCollapse(false)
+    setEdit(false)
   }
 
   return (
@@ -72,9 +94,11 @@ export const CalendarPage = () => {
       header={<NavbarApp />}
       navbar={
         <NavBar width={{ base: 300 }} height={500} p='xs'>
-          <Button onClick={() => setOpenedCollapse((o) => !o)}>
-            Add event
-          </Button>
+          {edit ? (
+            <Button onClick={() => setOpenedCollapse((o) => !o)}>Edit</Button>
+          ) : (
+            <Button onClick={() => setOpenedCollapse((o) => !o)}>add</Button>
+          )}
           <Collapse in={openedCollapse} transitionDuration={500}>
             <form onSubmit={onSubmitNewEvent}>
               <Box>
@@ -113,14 +137,24 @@ export const CalendarPage = () => {
                     setFormValues({ ...formValues, notes: e.target.value })
                   }
                 />
-                <Button type='submit'>Save</Button>
+                {edit ? (
+                  <div>
+                    <Button type='submit'>done</Button>
+                    <Button onClick={onCancelSubmit}>cancel</Button>
+                  </div>
+                ) : (
+                  <div>
+                    <Button type='submit'>done</Button>
+                    <Button>cancel</Button>
+                  </div>
+                )}
               </Box>
             </form>
           </Collapse>
         </NavBar>
       }
     >
-      <CalendarModal
+      {/* <CalendarModal
         formValues={formValues}
         setFormValues={setFormValues}
         initialEvent={initialEvent}
@@ -128,7 +162,7 @@ export const CalendarPage = () => {
         openModal={openModal}
         setOpenModal={setOpenModal}
         onDoubleClickEvent={onDoubleClickEvent}
-      />
+      /> */}
       <Calendar
         localizer={localizer}
         events={initialEvent}
@@ -138,7 +172,7 @@ export const CalendarPage = () => {
         eventPropGetter={eventStyleGetter}
         onDoubleClickEvent={onDoubleClickEvent}
         onView={onViewChange}
-        onSelectEvent={onSelect}
+        onSelectEvent={onEditEvent}
       />
     </AppShell>
   )

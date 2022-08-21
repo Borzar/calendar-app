@@ -13,19 +13,7 @@ const tempEvent = [
       _id: '123',
       name: 'boris',
     },
-  },
-  {
-    _id: new Date().getTime(),
-    title: 'evento2',
-    notes: 'notas del evento2',
-    start: new Date(),
-    end: addHours(new Date(), 1),
-    bgColor: '#D0EBFF',
-    user: {
-      _id: '123',
-      name: 'marcelo',
-    },
-  },
+  }
 ]
 
 export const useCalendarEvents = () => {
