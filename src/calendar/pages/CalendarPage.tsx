@@ -32,10 +32,11 @@ const eventStyleGetter: any = (
 }
 
 export const CalendarPage = () => {
-  const { setInitialEvent, initialEvent }: any = useCalendarEvents()
+  const { myEvents, setMyEvents }: any = useCalendarEvents()
   const [edit, setEdit] = useState(false)
   const [openedCollapse, setOpenedCollapse] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [tempEvent, setTempEvent]: any = useState({})
   const [formValues, setFormValues]: any = useState({
     title: '',
     notes: '',
@@ -58,20 +59,20 @@ export const CalendarPage = () => {
 
     // el metodo splice cambia el contenido del arreglo eliminando o
     // sustituyendo los elementos existentes por otros nuevos
-    const newEvent = {
-      id: initialEvent._id,
-      title: initialEvent.title,
-      notes: initialEvent.notes,
-    }
+
     setOpenedCollapse(true)
     setEdit(true)
     setFormValues({ ...event })
+    const newEvent = {
+      id: tempEvent.id,
+      title: tempEvent.title,
+      notes: tempEvent.notes,
+    }
+    const index = myEvents.findIndex((x: any) => x._id === tempEvent.id)
+    const newEventList = [...myEvents]
 
-    const index = initialEvent.findIndex((x: any) => x._id === newEvent.id)
-    const newEventList = [...initialEvent]
-
-    newEventList.splice(index, 1)
-    setInitialEvent(newEventList)
+    newEventList.splice(index, 1, newEvent)
+    setMyEvents(newEventList)
   }
 
   const onViewChange = (event: any) => {
@@ -84,7 +85,7 @@ export const CalendarPage = () => {
 
   const onSubmitNewEvent = (e: any) => {
     e.preventDefault()
-    setInitialEvent([...initialEvent, formValues])
+    setMyEvents([...myEvents, formValues])
     setOpenedCollapse(false)
     setEdit(false)
   }
@@ -105,7 +106,6 @@ export const CalendarPage = () => {
                 <DatePicker
                   selected={formValues.start}
                   onChange={(start) => setFormValues({ ...formValues, start })}
-                  required
                   showTimeSelect
                   dateFormat='Pp'
                 />
@@ -113,7 +113,6 @@ export const CalendarPage = () => {
                   selected={formValues.end}
                   onChange={(end) => setFormValues({ ...formValues, end })}
                   minDate={formValues.end}
-                  required
                   showTimeSelect
                   dateFormat='Pp'
                 />
@@ -165,7 +164,7 @@ export const CalendarPage = () => {
       /> */}
       <Calendar
         localizer={localizer}
-        events={initialEvent}
+        events={myEvents}
         startAccessor='start'
         endAccessor='end'
         style={{ height: 'calc( 100vh - 80px)' }}

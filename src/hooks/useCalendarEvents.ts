@@ -1,7 +1,7 @@
 import { addHours } from 'date-fns'
 import { useState } from 'react'
 
-const tempEvent = [
+const defaultEvents = [
   {
     _id: new Date().getTime(),
     title: 'evento1',
@@ -13,14 +13,14 @@ const tempEvent = [
       _id: '123',
       name: 'boris',
     },
-  }
+  },
 ]
 
 export const useCalendarEvents = () => {
-  const [initialEvent, setInitialEvent] = useState(tempEvent)
+  const [myEvents, setMyEvents] = useState(defaultEvents)
 
   return {
-    initialEvent,
-    setInitialEvent,
+    myEvents,
+    setMyEvents,
   }
 }
