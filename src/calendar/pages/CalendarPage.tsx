@@ -3,7 +3,7 @@ import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import DatePicker from 'react-datepicker'
 import { addHours } from 'date-fns'
-import { CalendarModal, NavbarApp, NavBar } from '../components'
+import { NavbarApp, NavBar } from '../components'
 import { localizer } from '../../helpers'
 import { useCalendarEvents } from '../../hooks'
 import {
@@ -33,10 +33,8 @@ const eventStyleGetter: any = (
 
 export const CalendarPage = () => {
   const { myEvents, setMyEvents }: any = useCalendarEvents()
-  const [edit, setEdit] = useState(false)
   const [openedCollapse, setOpenedCollapse] = useState(false)
   const [openModal, setOpenModal] = useState(false)
-  const [tempEvent, setTempEvent]: any = useState({})
   const [formValues, setFormValues]: any = useState({
     title: '',
     notes: '',
@@ -44,62 +42,50 @@ export const CalendarPage = () => {
     end: addHours(new Date(), 1),
   })
 
+  const onSubmitNewEvent = (e: any) => {
+    e.preventDefault()
+    setMyEvents([...myEvents, formValues])
+    setOpenedCollapse(false)
+  }
+
   const onDoubleClickEvent = (event: any) => {
     setFormValues({ ...event })
     setOpenModal(true)
   }
-
-  // AT WORK
-  const onEditEvent = (event: any) => {
-    // findIndex regresara un booleano
-    // este booleano le indica a findIndex que hemos encontrado el valor.
-    // es decir, la función va a recorrer el arreglo, y comparará los
-    // valores con la búsqueda. Si la función regresa false, seguirá buscando.
-    // si regresa true, se detiene y nos da el índice.
-
-    // el metodo splice cambia el contenido del arreglo eliminando o
-    // sustituyendo los elementos existentes por otros nuevos
-
-    setOpenedCollapse(true)
-    setEdit(true)
-    setFormValues({ ...event })
-    const newEvent = {
-      id: tempEvent.id,
-      title: tempEvent.title,
-      notes: tempEvent.notes,
-    }
-    const index = myEvents.findIndex((x: any) => x._id === tempEvent.id)
-    const newEventList = [...myEvents]
-
-    newEventList.splice(index, 1, newEvent)
-    setMyEvents(newEventList)
+  const onSelectEvent = (event: any) => {
+    console.log({ onSelectEvent: event })
   }
 
   const onViewChange = (event: any) => {
     console.log({ MyOnViewChange: event })
   }
 
-  const onCancelSubmit = () => {
-    setOpenedCollapse(false)
-  }
-
-  const onSubmitNewEvent = (e: any) => {
-    e.preventDefault()
-    setMyEvents([...myEvents, formValues])
-    setOpenedCollapse(false)
-    setEdit(false)
-  }
+  // -------------  CRUD PROGRESS ------------------
+  //
+  //
+  // const onEditEvent = (event: any) => {
+  //   // findIndex regresara un booleano
+  //   // este booleano le indica a findIndex que hemos encontrado el valor.
+  //   // Es decir, la función va a recorrer el arreglo, y comparará los
+  //   // valores con la búsqueda. Si la función regresa false, seguirá buscando.
+  //   // si regresa true, se detiene y nos da el índice.
+  //   // El metodo splice cambia el contenido del arreglo eliminando o
+  //   // sustituyendo los elementos existentes por otros nuevos
+  //   // setOpenedCollapse(true)
+  //   // setEdit(true)
+  //   // setFormValues({ ...event })
+  //   // const index = myEvents.findIndex((x: any) => x._id === tempEvent._id)
+  //   // const newEventList = [...myEvents]
+  //   // newEventList.splice(index, 1)
+  //   // setMyEvents(newEventList)
+  // }
 
   return (
     <AppShell
       header={<NavbarApp />}
       navbar={
         <NavBar width={{ base: 300 }} height={500} p='xs'>
-          {edit ? (
-            <Button onClick={() => setOpenedCollapse((o) => !o)}>Edit</Button>
-          ) : (
-            <Button onClick={() => setOpenedCollapse((o) => !o)}>add</Button>
-          )}
+          <Button onClick={() => setOpenedCollapse((o) => !o)}>add</Button>
           <Collapse in={openedCollapse} transitionDuration={500}>
             <form onSubmit={onSubmitNewEvent}>
               <Box>
@@ -136,32 +122,23 @@ export const CalendarPage = () => {
                     setFormValues({ ...formValues, notes: e.target.value })
                   }
                 />
-                {edit ? (
-                  <div>
-                    <Button type='submit'>done</Button>
-                    <Button onClick={onCancelSubmit}>cancel</Button>
-                  </div>
-                ) : (
-                  <div>
-                    <Button type='submit'>done</Button>
-                    <Button>cancel</Button>
-                  </div>
-                )}
+                <div>
+                  <Button type='submit'>done</Button>
+                </div>
               </Box>
             </form>
           </Collapse>
         </NavBar>
       }
     >
-      {/* <CalendarModal
+      {/* 
+      <CalendarModal
         formValues={formValues}
         setFormValues={setFormValues}
-        initialEvent={initialEvent}
-        setInitialEvent={setInitialEvent}
         openModal={openModal}
         setOpenModal={setOpenModal}
-        onDoubleClickEvent={onDoubleClickEvent}
-      /> */}
+      />
+        */}
       <Calendar
         localizer={localizer}
         events={myEvents}
@@ -171,7 +148,7 @@ export const CalendarPage = () => {
         eventPropGetter={eventStyleGetter}
         onDoubleClickEvent={onDoubleClickEvent}
         onView={onViewChange}
-        onSelectEvent={onEditEvent}
+        onSelectEvent={onSelectEvent}
       />
     </AppShell>
   )

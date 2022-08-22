@@ -1,37 +1,14 @@
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { useCalendarEvents } from '../../hooks'
-import { Modal, Textarea, TextInput, Button, Box } from '@mantine/core'
-import { useEffect, useState } from 'react'
-import { addHours } from 'date-fns/esm'
+import { Modal, TextInput, Button, Box } from '@mantine/core'
 
 export const CalendarModal = ({
   formValues,
+  setFormValues,
   openModal,
   setOpenModal,
 }: any) => {
-  const { initialEvent, setInitialEvent }: any = useCalendarEvents()
-  const [editForm, setEditForm]: any = useState({
-    title: '',
-    notes: '',
-    start: new Date(),
-    end: addHours(new Date(), 1),
-  })
 
-  useEffect(() => {
-    setEditForm({ ...formValues })
-  }, [formValues])
-
-  const onEditEvent = (e: any) => {
-    e.preventDefault()
-    setInitialEvent({
-      ...initialEvent,
-      title: editForm.title,
-      notes: editForm.notes,
-    })
-    console.log({ editForm }, editForm)
-  }
-
+  //  IN PROGRESS 
 
   return (
     <>
@@ -40,7 +17,7 @@ export const CalendarModal = ({
         onClose={() => setOpenModal(false)}
         title='Edit Event'
       >
-        <form onSubmit={onEditEvent}>
+        <form >
           <Box sx={{ maxWidth: 340 }} mx='auto'>
             {/* <DatePicker
               selected={editForm.start}
@@ -65,19 +42,19 @@ export const CalendarModal = ({
               label='Title'
               placeholder='Title'
               name='title'
-              value={editForm.title}
+              value={formValues.title}
               onChange={(e) =>
-                setEditForm({ ...editForm, title: e.target.value })
+                setFormValues({ ...formValues, title: e.target.value })
               }
             />
-            <Textarea
+            <TextInput
               label='Notes'
               placeholder='Notes'
               mt='sm'
               name='notes'
-              value={editForm.notes}
+              value={formValues.notes}
               onChange={(e) =>
-                setEditForm({ ...editForm, notes: e.target.value })
+                setFormValues({...formValues, notes: e.target.value })
               }
             />
             <Button mt={16} type='submit'>
