@@ -1,0 +1,10 @@
+{
+  "user": "usuario",
+  "logout": "salir",
+  "addButton": "agregar",
+  "titleForm": "titulo",
+  "notesForm": "nota",
+  "doneButton": "enviar",
+  "newEvent": "nuevo evento",
+  "changeMylenguage": "cambiar idioma {{ en }}"
+}

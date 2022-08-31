@@ -14,6 +14,7 @@ import {
   TextInput,
   Collapse,
 } from '@mantine/core'
+import { useTranslation } from 'react-i18next'
 
 const eventStyleGetter: any = (
   event: any,
@@ -32,15 +33,21 @@ const eventStyleGetter: any = (
 }
 
 export const CalendarPage = () => {
+  const { t, i18n } = useTranslation('calendarPage')
   const { myEvents, setMyEvents }: any = useCalendarEvents()
-  const [openedCollapse, setOpenedCollapse] = useState(false)
+  const [openedCollapse, setOpenedCollapse] = useState(true)
   const [openModal, setOpenModal] = useState(false)
+
   const [formValues, setFormValues]: any = useState({
+    id: new Date().getTime(),
     title: '',
     notes: '',
     start: new Date(),
     end: addHours(new Date(), 1),
   })
+
+  const en = 'español'
+  const es = 'ingles'
 
   const onSubmitNewEvent = (e: any) => {
     e.preventDefault()
@@ -53,41 +60,29 @@ export const CalendarPage = () => {
     setOpenModal(true)
   }
   const onSelectEvent = (event: any) => {
-    console.log({ onSelectEvent: event })
+    setFormValues({ ...event })
+    setOpenedCollapse(true)
   }
 
   const onViewChange = (event: any) => {
     console.log({ MyOnViewChange: event })
   }
 
-  // -------------  CRUD PROGRESS ------------------
-  //
-  //
-  // const onEditEvent = (event: any) => {
-  //   // findIndex regresara un booleano
-  //   // este booleano le indica a findIndex que hemos encontrado el valor.
-  //   // Es decir, la función va a recorrer el arreglo, y comparará los
-  //   // valores con la búsqueda. Si la función regresa false, seguirá buscando.
-  //   // si regresa true, se detiene y nos da el índice.
-  //   // El metodo splice cambia el contenido del arreglo eliminando o
-  //   // sustituyendo los elementos existentes por otros nuevos
-  //   // setOpenedCollapse(true)
-  //   // setEdit(true)
-  //   // setFormValues({ ...event })
-  //   // const index = myEvents.findIndex((x: any) => x._id === tempEvent._id)
-  //   // const newEventList = [...myEvents]
-  //   // newEventList.splice(index, 1)
-  //   // setMyEvents(newEventList)
-  // }
+  const changeLanguage = (e: any) => {
+    i18n.changeLanguage(e.target.value)
+  }
 
   return (
     <AppShell
       header={<NavbarApp />}
       navbar={
         <NavBar width={{ base: 300 }} height={500} p='xs'>
-          <Button onClick={() => setOpenedCollapse((o) => !o)}>add</Button>
+          <Button onClick={() => setOpenedCollapse((o) => !o)}>
+            {t('addButton')}
+          </Button>
           <Collapse in={openedCollapse} transitionDuration={500}>
             <form onSubmit={onSubmitNewEvent}>
+              <h1>{t('newEvent')}</h1>
               <Box>
                 <DatePicker
                   selected={formValues.start}
@@ -103,7 +98,7 @@ export const CalendarPage = () => {
                   dateFormat='Pp'
                 />
                 <TextInput
-                  label='Title'
+                  label={t('titleForm')}
                   placeholder='Title'
                   name='title'
                   required
@@ -113,7 +108,7 @@ export const CalendarPage = () => {
                   }
                 />
                 <Textarea
-                  label='Notes'
+                  label={t('notesForm')}
                   placeholder='Notes'
                   mt='sm'
                   name='notes'
@@ -123,7 +118,17 @@ export const CalendarPage = () => {
                   }
                 />
                 <div>
-                  <Button type='submit'>done</Button>
+                  <Button type='submit'>{t('doneButton')}</Button>
+                </div>
+                <div>
+                  <button onClick={changeLanguage} value='en-US'>
+                    {t('changeMylenguage')}
+                  </button>
+                </div>
+                <div>
+                  <button onClick={changeLanguage} value='es-CL'>
+                    {t('changeMylenguage')}
+                  </button>
                 </div>
               </Box>
             </form>
@@ -131,14 +136,13 @@ export const CalendarPage = () => {
         </NavBar>
       }
     >
-      {/* 
-      <CalendarModal
+      {/* <CalendarModal
         formValues={formValues}
         setFormValues={setFormValues}
         openModal={openModal}
         setOpenModal={setOpenModal}
-      />
-        */}
+      /> */}
+
       <Calendar
         localizer={localizer}
         events={myEvents}

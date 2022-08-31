@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 const defaultEvents = [
   {
-    _id: new Date().getTime(),
+    id: new Date().getTime(),
     title: 'evento1',
     notes: 'notas del evento1',
     start: new Date(),
