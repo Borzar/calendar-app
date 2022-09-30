@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import DatePicker from 'react-datepicker'
 import { addHours } from 'date-fns'
-import { NavbarApp, NavBar } from '../components'
+import { NavbarApp, NavBar, CalendarModal } from '../components'
 import { localizer } from '../../helpers'
 import { useCalendarEvents } from '../../hooks'
+import { DatePicker } from '@mantine/dates'
 import {
   AppShell,
   Box,
@@ -13,12 +13,13 @@ import {
   Textarea,
   TextInput,
   Collapse,
+  Text,
 } from '@mantine/core'
 
 const eventStyleGetter: any = (
   event: any,
-  start: any,
-  end: any,
+  start: Date,
+  end: Date,
   isSelected: any
 ) => {
   const style = {
@@ -68,61 +69,52 @@ export const CalendarPage = () => {
       header={<NavbarApp />}
       navbar={
         <NavBar width={{ base: 300 }} height={500} p='xs'>
-          <Button onClick={() => setOpenedCollapse((o) => !o)}>
-            New event
-          </Button>
-          <Collapse in={openedCollapse} transitionDuration={500}>
-            <form onSubmit={onSubmitNewEvent}>
-              New event
-              <Box>
-                <DatePicker
-                  selected={formValues.start}
-                  onChange={(start) => setFormValues({ ...formValues, start })}
-                  showTimeSelect
-                  dateFormat='Pp'
-                />
-                <DatePicker
-                  selected={formValues.end}
-                  onChange={(end) => setFormValues({ ...formValues, end })}
-                  minDate={formValues.end}
-                  showTimeSelect
-                  dateFormat='Pp'
-                />
-                <TextInput
-                  label='Title'
-                  placeholder='Title'
-                  name='title'
-                  required
-                  value={formValues.title}
-                  onChange={(e) =>
-                    setFormValues({ ...formValues, title: e.target.value })
-                  }
-                />
-                <Textarea
-                  label='Notes'
-                  placeholder='Notes'
-                  mt='sm'
-                  name='notes'
-                  value={formValues.notes}
-                  onChange={(e) =>
-                    setFormValues({ ...formValues, notes: e.target.value })
-                  }
-                />
-                <div>
-                  <Button type='submit'>Done</Button>
-                </div>
+          <form onSubmit={onSubmitNewEvent}>
+            <Box>
+              <DatePicker
+                label='Initial date'
+                minDate={new Date()}
+                onChange={(start) => setFormValues({ ...formValues, start })}
+              />
+              <DatePicker
+                label='Final date'
+                onChange={(end) => setFormValues({ ...formValues, end })}
+                minDate={formValues.end}
+              />
+              <TextInput
+                label='Title'
+                placeholder='Title'
+                name='title'
+                required
+                value={formValues.title}
+                onChange={(e) =>
+                  setFormValues({ ...formValues, title: e.target.value })
+                }
+              />
+              <Textarea
+                label='Notes'
+                placeholder='Notes'
+                mt='sm'
+                name='notes'
+                value={formValues.notes}
+                onChange={(e) =>
+                  setFormValues({ ...formValues, notes: e.target.value })
+                }
+              />
+              <Box sx={{ paddingTop: 10 }}>
+                <Button type='submit'>Done</Button>
               </Box>
-            </form>
-          </Collapse>
+            </Box>
+          </form>
         </NavBar>
       }
     >
-      {/* <CalendarModal
+      <CalendarModal
         formValues={formValues}
         setFormValues={setFormValues}
         openModal={openModal}
         setOpenModal={setOpenModal}
-      /> */}
+      />
 
       <Calendar
         localizer={localizer}

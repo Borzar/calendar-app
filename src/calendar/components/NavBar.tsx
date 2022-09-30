@@ -1,3 +1,5 @@
+import { Box } from '@mantine/core'
+
 export const NavBar = ({ children }: any) => {
-  return <div>{children}</div>
+  return <Box sx={{ marginTop: 10 }}>{children}</Box>
 }

@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom'
-import { LoginPage } from '../auth/pages'
 import { CalendarPage, CalendarRegister } from '../calendar/pages'
 
 export const AppRouter = () => {
