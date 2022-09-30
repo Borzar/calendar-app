@@ -14,7 +14,6 @@ import {
   TextInput,
   Collapse,
 } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
 
 const eventStyleGetter: any = (
   event: any,
@@ -33,7 +32,6 @@ const eventStyleGetter: any = (
 }
 
 export const CalendarPage = () => {
-  const { t, i18n } = useTranslation('calendarPage')
   const { myEvents, setMyEvents }: any = useCalendarEvents()
   const [openedCollapse, setOpenedCollapse] = useState(true)
   const [openModal, setOpenModal] = useState(false)
@@ -45,9 +43,6 @@ export const CalendarPage = () => {
     start: new Date(),
     end: addHours(new Date(), 1),
   })
-
-  const en = 'español'
-  const es = 'ingles'
 
   const onSubmitNewEvent = (e: any) => {
     e.preventDefault()
@@ -68,21 +63,17 @@ export const CalendarPage = () => {
     console.log({ MyOnViewChange: event })
   }
 
-  const changeLanguage = (e: any) => {
-    i18n.changeLanguage(e.target.value)
-  }
-
   return (
     <AppShell
       header={<NavbarApp />}
       navbar={
         <NavBar width={{ base: 300 }} height={500} p='xs'>
           <Button onClick={() => setOpenedCollapse((o) => !o)}>
-            {t('addButton')}
+            New event
           </Button>
           <Collapse in={openedCollapse} transitionDuration={500}>
             <form onSubmit={onSubmitNewEvent}>
-              <h1>{t('newEvent')}</h1>
+              New event
               <Box>
                 <DatePicker
                   selected={formValues.start}
@@ -98,7 +89,7 @@ export const CalendarPage = () => {
                   dateFormat='Pp'
                 />
                 <TextInput
-                  label={t('titleForm')}
+                  label='Title'
                   placeholder='Title'
                   name='title'
                   required
@@ -108,7 +99,7 @@ export const CalendarPage = () => {
                   }
                 />
                 <Textarea
-                  label={t('notesForm')}
+                  label='Notes'
                   placeholder='Notes'
                   mt='sm'
                   name='notes'
@@ -118,17 +109,7 @@ export const CalendarPage = () => {
                   }
                 />
                 <div>
-                  <Button type='submit'>{t('doneButton')}</Button>
-                </div>
-                <div>
-                  <button onClick={changeLanguage} value='en-US'>
-                    {t('changeMylenguage')}
-                  </button>
-                </div>
-                <div>
-                  <button onClick={changeLanguage} value='es-CL'>
-                    {t('changeMylenguage')}
-                  </button>
+                  <Button type='submit'>Done</Button>
                 </div>
               </Box>
             </form>

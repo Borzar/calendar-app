@@ -1,27 +1,24 @@
-import { useTranslation } from 'react-i18next'
 
 export const CalendarRegister = () => {
-  const { t } = useTranslation('calendarRegister')
 
   return (
     <div>
       <form>
-        <div> {t('myForm')}</div>
-
+        <div> Form </div>
         <label>
-          {t('myName')}:
+          Name
           <input type='text' name='name' />
         </label>
         <label>
-          {t('myLastname')}:
+          Lastname
           <input type='text' name='name' />
         </label>
         <label>
-          {t('myEmail')}:
+          Email
           <input type='text' name='name' />
         </label>
         <label>
-          {t('myAdress')}:
+          Adress
           <input type='text' name='name' />
         </label>
       </form>

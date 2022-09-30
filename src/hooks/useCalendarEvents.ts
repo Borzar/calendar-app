@@ -1,6 +1,19 @@
 import { addHours } from 'date-fns'
 import { useState } from 'react'
 
+type DefaultEvent = {
+  id: number,
+  title: string,
+  notes: string,
+  start: Date,
+  end: Date,
+  bgColor?: string,
+  user: {
+    _id: string,
+    name: string
+  } 
+}
+
 const defaultEvents = [
   {
     id: new Date().getTime(),
@@ -16,8 +29,9 @@ const defaultEvents = [
   },
 ]
 
+
 export const useCalendarEvents = () => {
-  const [myEvents, setMyEvents] = useState(defaultEvents)
+  const [myEvents, setMyEvents] = useState<DefaultEvent[]>(defaultEvents)
 
   return {
     myEvents,
