@@ -1,19 +1,18 @@
 import { useState } from 'react'
 import { Calendar } from 'react-big-calendar'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { addHours } from 'date-fns'
-import { NavbarApp, NavBar, CalendarModal } from '../components'
+import { NavbarApp, CalendarModal } from '../components'
 import { localizer } from '../../helpers'
 import { useCalendarEvents } from '../../hooks'
+import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { DatePicker } from '@mantine/dates'
 import {
   AppShell,
   Box,
-  Button,
-  Textarea,
-  TextInput,
   Collapse,
-  Text,
+  Divider,
+  TextInput,
+  Button
 } from '@mantine/core'
 
 const eventStyleGetter: any = (
@@ -32,32 +31,33 @@ const eventStyleGetter: any = (
   }
 }
 
+type formValuesProps = {
+  id: number
+  title: string
+  notes: string
+  start: Date
+  end: Date
+}
+
 export const CalendarPage = () => {
   const { myEvents, setMyEvents }: any = useCalendarEvents()
-  const [openedCollapse, setOpenedCollapse] = useState(true)
   const [openModal, setOpenModal] = useState(false)
+  const [viewEvent, setViewEvent] = useState(null)
+  const [opened, setOpened] = useState(false)
+  const { control, handleSubmit } = useForm<formValuesProps>()
 
-  const [formValues, setFormValues]: any = useState({
-    id: new Date().getTime(),
-    title: '',
-    notes: '',
-    start: new Date(),
-    end: addHours(new Date(), 1),
-  })
-
-  const onSubmitNewEvent = (e: any) => {
-    e.preventDefault()
-    setMyEvents([...myEvents, formValues])
-    setOpenedCollapse(false)
+  const onSubmit: SubmitHandler<formValuesProps> = (data) => {
+    console.log(data)
+    setMyEvents([...myEvents, data])
   }
 
   const onDoubleClickEvent = (event: any) => {
-    setFormValues({ ...event })
+    setViewEvent({ ...myEvents })
     setOpenModal(true)
   }
   const onSelectEvent = (event: any) => {
-    setFormValues({ ...event })
-    setOpenedCollapse(true)
+    console.log(event)
+    setViewEvent({ ...event })
   }
 
   const onViewChange = (event: any) => {
@@ -65,57 +65,84 @@ export const CalendarPage = () => {
   }
 
   return (
-    <AppShell
-      header={<NavbarApp />}
-      navbar={
-        <NavBar width={{ base: 300 }} height={500} p='xs'>
-          <form onSubmit={onSubmitNewEvent}>
-            <Box>
-              <DatePicker
-                label='Initial date'
-                minDate={new Date()}
-                onChange={(start) => setFormValues({ ...formValues, start })}
-              />
-              <DatePicker
-                label='Final date'
-                onChange={(end) => setFormValues({ ...formValues, end })}
-                minDate={formValues.end}
-              />
-              <TextInput
-                label='Title'
-                placeholder='Title'
-                name='title'
-                required
-                value={formValues.title}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, title: e.target.value })
-                }
-              />
-              <Textarea
-                label='Notes'
-                placeholder='Notes'
-                mt='sm'
-                name='notes'
-                value={formValues.notes}
-                onChange={(e) =>
-                  setFormValues({ ...formValues, notes: e.target.value })
-                }
-              />
-              <Box sx={{ paddingTop: 10 }}>
-                <Button type='submit'>Done</Button>
-              </Box>
-            </Box>
-          </form>
-        </NavBar>
-      }
-    >
+    <AppShell header={<NavbarApp />}>
       <CalendarModal
-        formValues={formValues}
-        setFormValues={setFormValues}
+        viewEvent={viewEvent}
+        setViewEvent={setViewEvent}
         openModal={openModal}
         setOpenModal={setOpenModal}
       />
-
+      <Box sx={{ marginBottom: 12, display: 'flex', flexDirection: 'column', alignItems: 'center'  }}>
+        <Button onClick={() => setOpened((o) => !o)}>+</Button>
+        <Collapse in={opened}>
+          <Box sx={{ marginTop: 12, marginBottom: 12, padding: 18, border: 'solid', borderWidth: 0.1, borderRadius: 10, borderColor: '#d9d9d9'}}>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Box sx={{ display: 'flex',  }}>
+                  <Controller
+                    name='start'
+                    control={control}
+                    defaultValue={new Date()}
+                    render={({ field }) => (
+                      <DatePicker
+                        sx={{ marginRight: 10 }}
+                        label='Initial date'
+                        minDate={new Date()}
+                        onChange={(e) => field.onChange(e)}
+                        value={field.value}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name='end'
+                    control={control}
+                    defaultValue={new Date()}
+                    render={({ field }) => (
+                      <DatePicker
+                        sx={{ marginRight: 10 }}
+                        label='Final date'
+                        minDate={new Date()}
+                        onChange={(e) => field.onChange(e)}
+                        value={field.value}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name='title'
+                    control={control}
+                    defaultValue=''
+                    render={({ field }) => (
+                      <TextInput
+                        sx={{ marginRight: 10 }}
+                        label='Title'
+                        value={field.value}
+                        onChange={(e) => field.onChange(e)}
+                      />
+                    )}
+                  />
+                  <Controller
+                    name='notes'
+                    control={control}
+                    defaultValue=''
+                    render={({ field }) => (
+                      <TextInput
+                        sx={{ marginRight: 10 }}
+                        label='Notes'
+                        value={field.value}
+                        onChange={(e) => field.onChange(e)}
+                      />
+                    )}
+                  />
+                  <Box sx={{ marginTop: 25 }}>
+                    <Button sx={{ alignItems: 'center' }} type='submit'>
+                      Done
+                    </Button>
+                  </Box>
+                </Box>
+              </form>
+            </Box>
+        </Collapse>
+      </Box>
+      <Divider sx={{ margin: 16 }} />
       <Calendar
         localizer={localizer}
         events={myEvents}

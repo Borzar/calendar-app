@@ -2,8 +2,8 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { Modal, TextInput, Button, Box } from '@mantine/core'
 
 export const CalendarModal = ({
-  formValues,
-  setFormValues,
+  viewEvent,
+  setViewEvent,
   openModal,
   setOpenModal,
 }: any) => {
@@ -15,7 +15,7 @@ export const CalendarModal = ({
       <Modal
         opened={openModal}
         onClose={() => setOpenModal(false)}
-        title='Edit Event'
+        title='Event'
       >
         <form >
           <Box sx={{ maxWidth: 340 }} mx='auto'>
@@ -38,7 +38,8 @@ export const CalendarModal = ({
               dateFormat='Pp'
               required
             /> */}
-            <TextInput
+
+            { /*           <TextInput
               label='Title'
               placeholder='Title'
               name='title'
@@ -56,7 +57,7 @@ export const CalendarModal = ({
               onChange={(e) =>
                 setFormValues({...formValues, notes: e.target.value })
               }
-            />
+            />*/ }  
             <Button mt={16} type='submit'>
               edit
             </Button>

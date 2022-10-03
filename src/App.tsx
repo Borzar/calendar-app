@@ -5,7 +5,7 @@ import { MantineProvider } from '@mantine/core'
 function App() {
   return (
     <>
-      <MantineProvider withGlobalStyles>
+      <MantineProvider withGlobalStyles withNormalizeCSS >
         <BrowserRouter>
           <AppRouter />
         </BrowserRouter>
