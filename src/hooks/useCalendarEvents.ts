@@ -1,18 +1,18 @@
 import { addHours } from 'date-fns'
 import { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid'
 
 type DefaultEventsProps = {
-  id: string,
-  title: string,
-  notes: string,
-  start: Date,
-  end: Date,
-  bgColor?: string,
+  id: string
+  title: string
+  notes: string
+  start: Date
+  end: Date
+  bgColor?: string
   user: {
-    _id: string,
+    _id: string
     name: string
-  } 
+  }
 }
 
 const defaultEvents = [
@@ -29,7 +29,6 @@ const defaultEvents = [
     },
   },
 ]
-
 
 export const useCalendarEvents = () => {
   const [myEvents, setMyEvents] = useState<DefaultEventsProps[]>(defaultEvents)

@@ -1,6 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { CalendarPage } from '../calendar/pages'
-import {EventsPage} from '../calendar/pages/EventsPage'
+import { CalendarPage } from '../calendar/pages/CalendarPage'
 
 export const AppRouter = () => {
   const validPage: string = 'authenticated'
@@ -8,8 +7,6 @@ export const AppRouter = () => {
   return (
     <Routes>
       <Route path='/' element={<CalendarPage />} />
-      <Route path='/calendarPage' element={<CalendarPage />} />
-      <Route path='/events' element={<EventsPage/>} />
     </Routes>
   )
 }

@@ -1,14 +1,34 @@
-import { NavLink, Stack, Box } from '@mantine/core'
-import {Link} from 'react-router-dom';
-import { Calendar, List, CirclePlus } from 'tabler-icons-react'
-import {EventsPage} from '../pages/EventsPage'
+import { Stack, Button } from '@mantine/core'
+import { Calendar, List } from 'tabler-icons-react'
 
-export const Menu = () => {
-
+export const Menu = (props: any) => {
   return (
-    <Stack sx={{ display: 'flex', backgroundColor: '#F3F0FF', width: 200 }}>
-      <Box sx={{ marginTop: 50, flexDirection: 'column' }}>
-      </Box>
+    <Stack
+      align='flex-start'
+      sx={{
+        paddingLeft: 20,
+        backgroundColor: '#F3F0FF',
+        width: 200,
+        paddingTop: 60,
+        opacity: '100%',
+      }}
+    >
+      <Button
+        color='dark'
+        variant='subtle'
+        leftIcon={<List />}
+        onClick={() => props.setShowCalendar(true)}
+      >
+        events
+      </Button>
+      <Button
+        color='dark'
+        variant='subtle'
+        leftIcon={<Calendar />}
+        onClick={() => props.setShowCalendar(false)}
+      >
+        calendar
+      </Button>
     </Stack>
   )
 }

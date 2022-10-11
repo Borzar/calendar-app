@@ -4,7 +4,7 @@ import { DatePicker } from '@mantine/dates'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { InputValuesProps } from '../pages'
 
-export const CalendarModal = (props: any ) => {
+export const CalendarModal = (props: any) => {
   const { handleSubmit, setValue, control } = useForm({
     defaultValues: props.currentData,
   })
@@ -80,7 +80,7 @@ export const CalendarModal = (props: any ) => {
             />
             <Box sx={{ marginTop: 25 }}>
               <Button sx={{ alignItems: 'center' }} type='submit'>
-               Edit 
+                Edit
               </Button>
             </Box>
           </Box>
