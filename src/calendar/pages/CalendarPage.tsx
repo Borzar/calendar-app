@@ -201,8 +201,8 @@ export const CalendarPage = () => {
                 <Box sx={{ marginTop: 25 }}>
                   <Button
                     sx={{ alignItems: 'center' }}
-                    variant='outline'
-                    color='teal'
+                    variant='gradient'
+                    color='black'
                     type='submit'
                   >
                     Done

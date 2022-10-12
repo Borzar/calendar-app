@@ -10,7 +10,7 @@ function App() {
         withNormalizeCSS
         theme={{
           colorScheme: 'light',
-          primaryColor: 'violet',
+          primaryColor: 'blue',
         }}
       >
         <BrowserRouter>
