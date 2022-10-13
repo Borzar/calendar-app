@@ -1,16 +1,28 @@
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { Box, Button, Text, TextInput } from '@mantine/core'
 
-interface IFormTextInput {
-  name: string
-  email: string
-  password: string
+interface IFormTextInputRegister {
+  nameRegister: string
+  emailRegister: string
+  passwordRegister: string
+}
+
+interface IFormTextInputLogin {
+  emailLogin: string
+  passwordLogin: string
 }
 
 export const LoginPage = () => {
-  const { control, handleSubmit } = useForm<IFormTextInput>()
+  const { control: controlRegister, handleSubmit: handleSubmitRegister } =
+    useForm<IFormTextInputRegister>()
+  const { control: controlLogin, handleSubmit: handleSubmitLogin } =
+    useForm<IFormTextInputLogin>()
 
-  const onSubmit: SubmitHandler<IFormTextInput> = (data) => {
+  const onSubmitRegister: SubmitHandler<IFormTextInputRegister> = (data) => {
+    console.log(data)
+  }
+
+  const onSubmitLogin: SubmitHandler<IFormTextInputLogin> = (data) => {
     console.log(data)
   }
 
@@ -39,39 +51,44 @@ export const LoginPage = () => {
           backgroundColor: '#A5D8FF',
         }}
       >
-        <Text italic weight={800} size='xl' sx={{ marginBottom: 20, textAlign: 'center'}}>
+        <Text
+          italic
+          weight={800}
+          size='xl'
+          sx={{ marginBottom: 20, textAlign: 'center' }}
+        >
           Register
         </Text>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmitRegister(onSubmitRegister)}>
           <Controller
-            name='name'
-            control={control}
+            name='nameRegister'
+            control={controlRegister}
             defaultValue=''
             render={({ field }) => (
               <TextInput
                 placeholder='name'
                 label='Nombre'
-                sx={{ paddingBottom: 14, textAlign: 'start'}}
+                sx={{ paddingBottom: 14, textAlign: 'start' }}
                 {...field}
               />
             )}
           />
           <Controller
-            name='email'
-            control={control}
+            name='emailRegister'
+            control={controlRegister}
             defaultValue=''
             render={({ field }) => (
               <TextInput
                 placeholder='you@email.com'
                 label='Email'
-                sx={{ paddingBottom: 14, color:'#F8F9FA', textAlign: 'start'}}
+                sx={{ paddingBottom: 14, color: '#F8F9FA', textAlign: 'start' }}
                 {...field}
               />
             )}
           />
           <Controller
-            name='password'
-            control={control}
+            name='passwordRegister'
+            control={controlRegister}
             defaultValue=''
             render={({ field }) => (
               <TextInput
@@ -104,29 +121,29 @@ export const LoginPage = () => {
         <Text italic weight={800} size='xl' sx={{ marginBottom: 20 }}>
           Login
         </Text>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmitLogin(onSubmitLogin)}>
           <Controller
-            name='email'
-            control={control}
+            name='emailLogin'
+            control={controlLogin}
             defaultValue=''
             render={({ field }) => (
               <TextInput
                 placeholder='@email'
                 label='Email'
-                sx={{ paddingBottom: 14,  textAlign: 'start' }}
+                sx={{ paddingBottom: 14, textAlign: 'start' }}
                 {...field}
               />
             )}
           />
           <Controller
-            name='password'
-            control={control}
+            name='passwordLogin'
+            control={controlLogin}
             defaultValue=''
             render={({ field }) => (
               <TextInput
                 placeholder='pasword'
                 label='Password'
-                sx={{  textAlign: 'start', paddingBottom: 14 }}
+                sx={{ textAlign: 'start', paddingBottom: 14 }}
                 {...field}
               />
             )}
