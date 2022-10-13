@@ -1,15 +1,16 @@
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { Box, Button, Text, TextInput } from '@mantine/core'
+import { userLogin } from '../../api/userLogin'
 
 interface IFormTextInputRegister {
-  nameRegister: string
-  emailRegister: string
-  passwordRegister: string
+  name: string
+  email: string
+  password: string
 }
 
 interface IFormTextInputLogin {
-  emailLogin: string
-  passwordLogin: string
+  email: string
+  password: string
 }
 
 export const LoginPage = () => {
@@ -23,7 +24,7 @@ export const LoginPage = () => {
   }
 
   const onSubmitLogin: SubmitHandler<IFormTextInputLogin> = (data) => {
-    console.log(data)
+    userLogin(data)
   }
 
   return (
@@ -61,7 +62,7 @@ export const LoginPage = () => {
         </Text>
         <form onSubmit={handleSubmitRegister(onSubmitRegister)}>
           <Controller
-            name='nameRegister'
+            name='name'
             control={controlRegister}
             defaultValue=''
             render={({ field }) => (
@@ -74,7 +75,7 @@ export const LoginPage = () => {
             )}
           />
           <Controller
-            name='emailRegister'
+            name='email'
             control={controlRegister}
             defaultValue=''
             render={({ field }) => (
@@ -87,7 +88,7 @@ export const LoginPage = () => {
             )}
           />
           <Controller
-            name='passwordRegister'
+            name='password'
             control={controlRegister}
             defaultValue=''
             render={({ field }) => (
@@ -123,7 +124,7 @@ export const LoginPage = () => {
         </Text>
         <form onSubmit={handleSubmitLogin(onSubmitLogin)}>
           <Controller
-            name='emailLogin'
+            name='email'
             control={controlLogin}
             defaultValue=''
             render={({ field }) => (
@@ -136,7 +137,7 @@ export const LoginPage = () => {
             )}
           />
           <Controller
-            name='passwordLogin'
+            name='password'
             control={controlLogin}
             defaultValue=''
             render={({ field }) => (
