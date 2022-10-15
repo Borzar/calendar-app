@@ -1,6 +1,7 @@
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { Box, Button, Text, TextInput } from '@mantine/core'
-import { userLogin } from '../../api/userLogin'
+import { userLogin, userRegister } from '../../api/userAuth'
+import { useNavigate } from 'react-router-dom'
 
 interface IFormTextInputRegister {
   name: string
@@ -18,13 +19,21 @@ export const LoginPage = () => {
     useForm<IFormTextInputRegister>()
   const { control: controlLogin, handleSubmit: handleSubmitLogin } =
     useForm<IFormTextInputLogin>()
+  const navigate = useNavigate()
 
   const onSubmitRegister: SubmitHandler<IFormTextInputRegister> = (data) => {
-    console.log(data)
+    userRegister(data)
   }
 
-  const onSubmitLogin: SubmitHandler<IFormTextInputLogin> = (data) => {
+  const checkAuthenticated = () => {
+    const userAuthenticated = localStorage.getItem('token')
+    if (userAuthenticated) return navigate('/')
+  }
+
+  const onSubmitLogin: SubmitHandler<IFormTextInputLogin> = async (data) => {
+    localStorage.clear()
     userLogin(data)
+    setTimeout(checkAuthenticated, 500)
   }
 
   return (
