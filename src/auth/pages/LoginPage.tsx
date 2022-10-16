@@ -5,11 +5,19 @@ import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-const schema = yup.object({
+const schemaRegister = yup.object({
   name: yup
     .string()
     .required()
     .min(2, 'must have at least two letters of any combination'),
+  email: yup.string().required().email('email incomplete'),
+  password: yup
+    .string()
+    .required()
+    .min(6, 'must have at least six letters of any combination'),
+})
+
+const schemaLogin = yup.object({
   email: yup.string().required().email('email incomplete'),
   password: yup
     .string()
@@ -30,14 +38,16 @@ interface IFormTextInputLogin {
 
 export const LoginPage = () => {
   const {
-    formState: { errors },
+    formState: { errors: errorsRegister },
     control: controlRegister,
     handleSubmit: handleSubmitRegister,
   } = useForm<IFormTextInputRegister>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(schemaRegister),
   })
-  const { control: controlLogin, handleSubmit: handleSubmitLogin } =
-    useForm<IFormTextInputLogin>()
+  const { formState: { errors: errorsLogin }, control: controlLogin, handleSubmit: handleSubmitLogin } =
+    useForm<IFormTextInputLogin>({
+      resolver: yupResolver(schemaLogin),
+    })
   const navigate = useNavigate()
 
   const onSubmitRegister: SubmitHandler<IFormTextInputRegister> = (data) => {
@@ -101,7 +111,7 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span> {errors.name?.message}</span>
+                <span> {errorsRegister.name?.message}</span>
               </div>
             )}
           />
@@ -122,7 +132,7 @@ export const LoginPage = () => {
                   }}
                   {...field}
                 />
-                <span> {errors.email?.message}</span>
+                <span> {errorsRegister.email?.message}</span>
               </div>
             )}
           />
@@ -139,7 +149,7 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span> {errors.password?.message}</span>
+                <span> {errorsRegister.password?.message}</span>
               </div>
             )}
           />
@@ -171,12 +181,15 @@ export const LoginPage = () => {
             control={controlLogin}
             defaultValue=''
             render={({ field }) => (
-              <TextInput
-                placeholder='@email'
-                label='Email'
-                sx={{ paddingBottom: 14, textAlign: 'start' }}
-                {...field}
-              />
+              <div>
+                <TextInput
+                  placeholder='@email'
+                  label='Email'
+                  sx={{ paddingBottom: 14, textAlign: 'start' }}
+                  {...field}
+                />
+                <span> {errorsLogin.email?.message}</span>
+              </div>
             )}
           />
           <Controller
@@ -184,13 +197,16 @@ export const LoginPage = () => {
             control={controlLogin}
             defaultValue=''
             render={({ field }) => (
-              <TextInput
-                type='password'
-                placeholder='pasword'
-                label='Password'
-                sx={{ textAlign: 'start', paddingBottom: 14 }}
-                {...field}
-              />
+              <div>
+                <TextInput
+                  type='password'
+                  placeholder='pasword'
+                  label='Password'
+                  sx={{ textAlign: 'start', paddingBottom: 14 }}
+                  {...field}
+                />
+                <span> {errorsLogin.password?.message}</span>
+              </div>
             )}
           />
           <Button variant='gradient' type='submit' sx={{ marginTop: 20 }}>
