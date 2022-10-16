@@ -44,10 +44,13 @@ export const LoginPage = () => {
   } = useForm<IFormTextInputRegister>({
     resolver: yupResolver(schemaRegister),
   })
-  const { formState: { errors: errorsLogin }, control: controlLogin, handleSubmit: handleSubmitLogin } =
-    useForm<IFormTextInputLogin>({
-      resolver: yupResolver(schemaLogin),
-    })
+  const {
+    formState: { errors: errorsLogin },
+    control: controlLogin,
+    handleSubmit: handleSubmitLogin,
+  } = useForm<IFormTextInputLogin>({
+    resolver: yupResolver(schemaLogin),
+  })
   const navigate = useNavigate()
 
   const onSubmitRegister: SubmitHandler<IFormTextInputRegister> = (data) => {
@@ -111,7 +114,10 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span> {errorsRegister.name?.message}</span>
+                <span style={{ fontSize: 14, color: 'red' }}>
+                  {' '}
+                  {errorsRegister.name?.message}
+                </span>
               </div>
             )}
           />
@@ -132,7 +138,10 @@ export const LoginPage = () => {
                   }}
                   {...field}
                 />
-                <span> {errorsRegister.email?.message}</span>
+                <span style={{ fontSize: 14, color: 'red' }}>
+                  {' '}
+                  {errorsRegister.email?.message}
+                </span>
               </div>
             )}
           />
@@ -149,7 +158,10 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span> {errorsRegister.password?.message}</span>
+                <span style={{ fontSize: 14, color: 'red' }}>
+                  {' '}
+                  {errorsRegister.password?.message}
+                </span>
               </div>
             )}
           />
@@ -188,7 +200,10 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span> {errorsLogin.email?.message}</span>
+                <span style={{ fontSize: 14, color: 'red' }}>
+                  {' '}
+                  {errorsLogin.email?.message}
+                </span>
               </div>
             )}
           />
@@ -205,7 +220,10 @@ export const LoginPage = () => {
                   sx={{ textAlign: 'start', paddingBottom: 14 }}
                   {...field}
                 />
-                <span> {errorsLogin.password?.message}</span>
+                <span style={{ fontSize: 14, color: 'red' }}>
+                  {' '}
+                  {errorsLogin.password?.message}
+                </span>
               </div>
             )}
           />
