@@ -107,18 +107,17 @@ export const LoginPage = () => {
             control={controlRegister}
             defaultValue=''
             render={({ field }) => (
-              <div>
+              <Box>
                 <TextInput
                   placeholder='name'
                   label='Nombre'
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span style={{ fontSize: 14, color: 'red' }}>
-                  {' '}
+                <Text style={{ fontSize: 14, color: 'red' }}>
                   {errorsRegister.name?.message}
-                </span>
-              </div>
+                </Text>
+              </Box>
             )}
           />
           <Controller
@@ -126,7 +125,7 @@ export const LoginPage = () => {
             control={controlRegister}
             defaultValue=''
             render={({ field }) => (
-              <div>
+              <Box>
                 <TextInput
                   type='email'
                   placeholder='you@email.com'
@@ -138,11 +137,10 @@ export const LoginPage = () => {
                   }}
                   {...field}
                 />
-                <span style={{ fontSize: 14, color: 'red' }}>
-                  {' '}
+                <Text style={{ fontSize: 14, color: 'red' }}>
                   {errorsRegister.email?.message}
-                </span>
-              </div>
+                </Text>
+              </Box>
             )}
           />
           <Controller
@@ -150,7 +148,7 @@ export const LoginPage = () => {
             control={controlRegister}
             defaultValue=''
             render={({ field }) => (
-              <div>
+              <Box>
                 <TextInput
                   type='password'
                   placeholder='pasword'
@@ -158,11 +156,10 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span style={{ fontSize: 14, color: 'red' }}>
-                  {' '}
+                <Text style={{ fontSize: 14, color: 'red' }}>
                   {errorsRegister.password?.message}
-                </span>
-              </div>
+                </Text>
+              </Box>
             )}
           />
           <Button variant='gradient' type='submit' sx={{ marginTop: 20 }}>
@@ -193,18 +190,17 @@ export const LoginPage = () => {
             control={controlLogin}
             defaultValue=''
             render={({ field }) => (
-              <div>
+              <Box>
                 <TextInput
                   placeholder='@email'
                   label='Email'
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <span style={{ fontSize: 14, color: 'red' }}>
-                  {' '}
+                <Text style={{ fontSize: 14, color: 'red' }}>
                   {errorsLogin.email?.message}
-                </span>
-              </div>
+                </Text>
+              </Box>
             )}
           />
           <Controller
@@ -212,7 +208,7 @@ export const LoginPage = () => {
             control={controlLogin}
             defaultValue=''
             render={({ field }) => (
-              <div>
+              <Box>
                 <TextInput
                   type='password'
                   placeholder='pasword'
@@ -220,11 +216,10 @@ export const LoginPage = () => {
                   sx={{ textAlign: 'start', paddingBottom: 14 }}
                   {...field}
                 />
-                <span style={{ fontSize: 14, color: 'red' }}>
-                  {' '}
+                <Text style={{ fontSize: 14, color: 'red' }}>
                   {errorsLogin.password?.message}
-                </span>
-              </div>
+                </Text>
+              </Box>
             )}
           />
           <Button variant='gradient' type='submit' sx={{ marginTop: 20 }}>
