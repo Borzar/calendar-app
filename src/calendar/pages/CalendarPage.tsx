@@ -4,7 +4,6 @@ import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { MenuTop, CalendarModal, Menu, CalendarTable } from '../components'
 import { useCalendarEvents } from '../../hooks'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import { DatePicker } from '@mantine/dates'
 import {
   AppShell,
   Box,
@@ -14,9 +13,14 @@ import {
   Text,
   Divider,
 } from '@mantine/core'
+
 import { addHours } from 'date-fns'
 import { Calendar } from 'react-big-calendar'
 import { localizer } from '../../helpers'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const eventStyleGetter: any = (
   event: any,
@@ -42,11 +46,24 @@ export type InputValuesProps = {
   end: Date
 }
 
+const schemaNewEvent = yup.object({
+  title: yup.string().required(),
+  start: yup.date().required().min(new Date()),
+  end: yup.date().required().min(addHours(new Date(), 1)),
+})
+
 export const CalendarPage = () => {
   const [showCalendar, setShowCalendar] = useState(false)
   const { myEvents, setMyEvents }: any = useCalendarEvents()
   const [openModal, setOpenModal] = useState(false)
-  const { control, handleSubmit, setValue } = useForm<InputValuesProps>()
+  const {
+    formState: { errors },
+    control,
+    handleSubmit,
+    setValue,
+  } = useForm<InputValuesProps>({
+    resolver: yupResolver(schemaNewEvent),
+  })
   const [initialValuesEditForm, setInitialValuesEditForm] =
     useState<InputValuesProps>({
       id: '',
@@ -149,13 +166,35 @@ export const CalendarPage = () => {
                   control={control}
                   defaultValue={new Date()}
                   render={({ field }) => (
-                    <DatePicker
-                      sx={{ marginRight: 10 }}
-                      label='Initial date'
-                      minDate={new Date()}
-                      onChange={(e) => field.onChange(e)}
-                      value={field.value}
-                    />
+                    <Box sx={{ marginRight: 10 }}>
+                      <Text
+                        style={{
+                          display: 'inline-block',
+                          fontSize: 14,
+                          fontWeight: 500,
+                          color: '#212529',
+                        }}
+                      >
+                        Initial date
+                      </Text>
+                      <DatePicker
+                        minDate={new Date()}
+                        onChange={(e) => field.onChange(e)}
+                        selected={field.value}
+                        showTimeSelect
+                        dateFormat='MMMM d, yyyy h:mm aa'
+                        className='datePicker'
+                      />
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'red',
+                          fontStyle: 'italic',
+                        }}
+                      >
+                        {errors.start?.message}
+                      </Text>
+                    </Box>
                   )}
                 />
                 <Controller
@@ -163,13 +202,35 @@ export const CalendarPage = () => {
                   control={control}
                   defaultValue={new Date()}
                   render={({ field }) => (
-                    <DatePicker
-                      sx={{ marginRight: 10 }}
-                      label='Final date'
-                      minDate={new Date()}
-                      onChange={(e) => field.onChange(e)}
-                      value={field.value}
-                    />
+                    <Box sx={{ marginRight: 10 }}>
+                      <Text
+                        style={{
+                          display: 'inline-block',
+                          fontSize: 14,
+                          fontWeight: 500,
+                          color: '#212529',
+                        }}
+                      >
+                        Final date
+                      </Text>
+                      <DatePicker
+                        minDate={addHours(new Date(), 1)}
+                        onChange={(e) => field.onChange(e)}
+                        selected={field.value}
+                        showTimeSelect
+                        dateFormat='MMMM d, yyyy h:mm aa'
+                        className='datePicker'
+                      />
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'red',
+                          fontStyle: 'italic',
+                        }}
+                      >
+                        {errors.end?.message}
+                      </Text>
+                    </Box>
                   )}
                 />
                 <Controller
@@ -177,12 +238,23 @@ export const CalendarPage = () => {
                   control={control}
                   defaultValue=''
                   render={({ field }) => (
-                    <TextInput
-                      sx={{ marginRight: 10 }}
-                      label='Title'
-                      value={field.value}
-                      onChange={(e) => field.onChange(e)}
-                    />
+                    <Box>
+                      <TextInput
+                        sx={{ marginRight: 10 }}
+                        label='Title'
+                        value={field.value}
+                        onChange={(e) => field.onChange(e)}
+                      />
+                      <Text
+                        style={{
+                          fontSize: 14,
+                          color: 'red',
+                          fontStyle: 'italic',
+                        }}
+                      >
+                        {errors.title?.message}
+                      </Text>
+                    </Box>
                   )}
                 />
                 <Controller

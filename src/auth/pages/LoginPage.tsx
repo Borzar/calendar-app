@@ -114,7 +114,9 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <Text style={{ fontSize: 14, color: 'red' }}>
+                <Text
+                  style={{ fontSize: 14, color: 'red', fontStyle: 'italic' }}
+                >
                   {errorsRegister.name?.message}
                 </Text>
               </Box>
@@ -137,7 +139,9 @@ export const LoginPage = () => {
                   }}
                   {...field}
                 />
-                <Text style={{ fontSize: 14, color: 'red' }}>
+                <Text
+                  style={{ fontSize: 14, color: 'red', fontStyle: 'italic' }}
+                >
                   {errorsRegister.email?.message}
                 </Text>
               </Box>
@@ -156,7 +160,9 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <Text style={{ fontSize: 14, color: 'red' }}>
+                <Text
+                  style={{ fontSize: 14, color: 'red', fontStyle: 'italic' }}
+                >
                   {errorsRegister.password?.message}
                 </Text>
               </Box>
@@ -197,7 +203,9 @@ export const LoginPage = () => {
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
                 />
-                <Text style={{ fontSize: 14, color: 'red' }}>
+                <Text
+                  style={{ fontSize: 14, color: 'red', fontStyle: 'italic' }}
+                >
                   {errorsLogin.email?.message}
                 </Text>
               </Box>
@@ -216,7 +224,9 @@ export const LoginPage = () => {
                   sx={{ textAlign: 'start', paddingBottom: 14 }}
                   {...field}
                 />
-                <Text style={{ fontSize: 14, color: 'red' }}>
+                <Text
+                  style={{ fontSize: 14, color: 'red', fontStyle: 'italic' }}
+                >
                   {errorsLogin.password?.message}
                 </Text>
               </Box>
