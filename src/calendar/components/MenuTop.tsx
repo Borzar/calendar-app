@@ -1,7 +1,31 @@
-import { Button, Box, Overlay } from '@mantine/core'
+import { Button, Box, Overlay, Text } from '@mantine/core'
 import { UserCircle } from 'tabler-icons-react'
+import { useEffect, useState } from 'react'
+import calendarApi from '../../api/calendarApi'
+import { useNavigate } from 'react-router-dom'
 
 export const MenuTop = () => {
+  const [user, setUser] = useState<string>()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    getNameUser()
+  }, [])
+
+  async function getNameUser() {
+    try {
+      const response = await calendarApi.get('/auth/renew')
+      setUser(response.data.name)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onLogout = () => {
+    localStorage.clear()
+    navigate('/auth')
+  }
+
   return (
     <>
       <Overlay
@@ -12,11 +36,23 @@ export const MenuTop = () => {
           backgroundColor: '#A5D8FF',
           position: 'fixed',
           width: '100%',
-          height: 36,
+          height: 55,
         }}
       >
-        <Box>
-          <Button color='dark' variant='subtle' leftIcon={<UserCircle />}>
+        <Box
+          sx={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}
+        >
+          <Box sx={{ paddingRight: 22 }}>
+            <Text weight={700} transform='capitalize'>
+              {user?.toLowerCase()}
+            </Text>
+          </Box>
+          <Button
+            onClick={onLogout}
+            color='dark'
+            variant='subtle'
+            leftIcon={<UserCircle />}
+          >
             Logout
           </Button>
         </Box>

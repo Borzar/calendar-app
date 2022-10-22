@@ -89,6 +89,7 @@ export const CalendarPage = () => {
 
   const updateData = (id: string, updatedData: InputValuesProps) => {
     setOpenModal(false)
+
     setMyEvents(
       myEvents.map((x: InputValuesProps) => (x.id === id ? updatedData : x))
     )
