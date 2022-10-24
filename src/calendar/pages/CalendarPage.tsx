@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { MenuTop, CalendarModal, Menu, CalendarTable } from '../components'
@@ -21,6 +21,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { createEvent, getEvents } from '../../api/userAuth'
 
 const eventStyleGetter: any = (
   event: any,
@@ -76,6 +77,10 @@ export const CalendarPage = () => {
     initialValuesEditForm
   )
 
+  useEffect(() => {
+    getEvents(setMyEvents)
+  }, [])
+
   const editFormValues = (input: InputValuesProps) => {
     setOpenModal(true)
     setCurrentData({
@@ -102,6 +107,7 @@ export const CalendarPage = () => {
   const onSubmit: SubmitHandler<InputValuesProps> = (data) => {
     data.id = uuidv4()
     setMyEvents([...myEvents, data])
+    createEvent(data)
     setValue('title', '')
     setValue('notes', '')
     setValue('start', new Date())
