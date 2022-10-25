@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const calendarApi = axios.create({
+const apiCalendar = axios.create({
 	baseURL: process.env.REACT_APP_API_URL,
 })
 
-calendarApi.interceptors.request.use((config) => {
+apiCalendar.interceptors.request.use((config) => {
 	config.headers = {
 		...config.headers,
 		'x-token': localStorage.getItem('token'),
@@ -12,4 +12,4 @@ calendarApi.interceptors.request.use((config) => {
 	return config
 })
 
-export default calendarApi
+export default apiCalendar

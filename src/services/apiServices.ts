@@ -1,5 +1,5 @@
 import { convertEventsToDate } from '../helpers/convertEventsToDate'
-import calendarApi from './calendarApi'
+import calendarApi from './apiCalendar'
 
 export const userLogin = async (data: {}) => {
 	try {
@@ -31,7 +31,7 @@ export const checkAuthToken = async () => {
 	}
 }
 
-export const getEvents = async (state: any) => {
+export const getApiEvents = async (state: any) => {
 	try {
 		const eventsApi = await calendarApi.get('/events')
 		await convertEventsToDate(eventsApi.data.events)
@@ -41,7 +41,7 @@ export const getEvents = async (state: any) => {
 	}
 }
 
-export const updateEvent = async (id: string, data: {}) => {
+export const updateApiEvent = async (id: string, data: {}) => {
 	try {
 		await calendarApi.put(`/events/${id}`, data)
 	} catch (error) {
@@ -57,7 +57,7 @@ export const deleteApiEvent = async (id: string) => {
 	}
 }
 
-export const createEvent = async (data: {}) => {
+export const createApiEvent = async (data: {}) => {
 	try {
 		await calendarApi.post('/events', data)
 	} catch (error) {

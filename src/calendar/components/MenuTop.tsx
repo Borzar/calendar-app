@@ -1,7 +1,7 @@
 import { Button, Box, Overlay, Text } from '@mantine/core'
 import { UserCircle } from 'tabler-icons-react'
 import { useEffect, useState } from 'react'
-import calendarApi from '../../api/calendarApi'
+import { apiCalendar } from '../../services'
 import { useNavigate } from 'react-router-dom'
 
 export const MenuTop = () => {
@@ -14,7 +14,7 @@ export const MenuTop = () => {
 
   async function getNameUser() {
     try {
-      const response = await calendarApi.get('/auth/renew')
+      const response = await apiCalendar.get('/auth/renew')
       setUser(response.data.name)
     } catch (error) {
       console.error(error)

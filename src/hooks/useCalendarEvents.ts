@@ -13,7 +13,6 @@ type DefaultEventsProps = {
   }
 }
 
-
 export const useCalendarEvents = () => {
   const [myEvents, setMyEvents] = useState<DefaultEventsProps[]>()
 

@@ -13,7 +13,6 @@ import {
   Text,
   Divider,
 } from '@mantine/core'
-
 import { addHours } from 'date-fns'
 import { Calendar } from 'react-big-calendar'
 import { localizer } from '../../helpers'
@@ -21,7 +20,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { createEvent, deleteApiEvent, getEvents } from '../../api/userAuth'
+import { createApiEvent, deleteApiEvent, getApiEvents } from '../../services'
 
 const eventStyleGetter: any = (
   event: any,
@@ -78,7 +77,7 @@ export const CalendarPage = () => {
   )
 
   useEffect(() => {
-    getEvents(setMyEvents)
+    getApiEvents(setMyEvents)
   }, [])
 
   const editFormValues = (input: InputValuesProps) => {
@@ -107,7 +106,7 @@ export const CalendarPage = () => {
   const onSubmit: SubmitHandler<InputValuesProps> = (data) => {
     data.id = uuidv4()
     setMyEvents([...myEvents, data])
-    createEvent(data)
+    createApiEvent(data)
     setValue('title', '')
     setValue('notes', '')
     setValue('start', new Date())

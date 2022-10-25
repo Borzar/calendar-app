@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { CalendarPage } from '../calendar/pages'
 import { LoginPage } from '../auth/pages'
-import { checkAuthToken } from '../api/userAuth'
+import { checkAuthToken } from '../services'
 
 export const AppRouter = () => {
   const navigate = useNavigate()

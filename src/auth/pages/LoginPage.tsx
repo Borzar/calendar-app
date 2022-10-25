@@ -1,6 +1,6 @@
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { Box, Button, Text, TextInput } from '@mantine/core'
-import { userLogin, userRegister } from '../../api/userAuth'
+import { userLogin, userRegister } from '../../services'
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
