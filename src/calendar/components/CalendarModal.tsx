@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { addHours } from 'date-fns'
+import { updateEvent } from '../../api/userAuth'
 
 const schemaEditEvent = yup.object({
   title: yup.string().required(),
@@ -32,6 +33,7 @@ export const CalendarModal = (props: any) => {
   const onSubmit: SubmitHandler<InputValuesProps> = (data) => {
     data.id = props.currentData.id
     props.updateData(props.currentData.id, data)
+    updateEvent(props.currentData.id, data)
   }
 
   return (

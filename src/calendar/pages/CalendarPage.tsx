@@ -21,7 +21,7 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { createEvent, getEvents } from '../../api/userAuth'
+import { createEvent, deleteApiEvent, getEvents } from '../../api/userAuth'
 
 const eventStyleGetter: any = (
   event: any,
@@ -94,7 +94,6 @@ export const CalendarPage = () => {
 
   const updateData = (id: string, updatedData: InputValuesProps) => {
     setOpenModal(false)
-
     setMyEvents(
       myEvents.map((x: InputValuesProps) => (x.id === id ? updatedData : x))
     )
@@ -102,6 +101,7 @@ export const CalendarPage = () => {
 
   const deleteEvent = (id: string) => {
     setMyEvents(myEvents.filter((x: InputValuesProps) => x.id !== id))
+    deleteApiEvent(id)
   }
 
   const onSubmit: SubmitHandler<InputValuesProps> = (data) => {

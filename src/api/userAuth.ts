@@ -37,7 +37,23 @@ export const getEvents = async (state: any) => {
 		await convertEventsToDate(eventsApi.data.events)
 		state(eventsApi.data.events)
 	} catch (error) {
-		console.log('create event error')
+		console.log('get event error')
+	}
+}
+
+export const updateEvent = async (id: string, data: {}) => {
+	try {
+		await calendarApi.put(`/events/${id}`, data)
+	} catch (error) {
+		console.log('update event error')
+	}
+}
+
+export const deleteApiEvent = async (id: string) => {
+	try {
+		await calendarApi.delete(`/events/${id}`)
+	} catch (error) {
+		console.log('delete event error')
 	}
 }
 
