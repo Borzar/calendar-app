@@ -1,12 +1,12 @@
 import 'react-datepicker/dist/react-datepicker.css'
 import { TextInput, Button, Box, Text } from '@mantine/core'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import { InputValuesProps } from '../pages'
+import { InputValuesProps } from '../../pages'
 import DatePicker from 'react-datepicker'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { addHours } from 'date-fns'
-import { updateApiEvent } from '../../services'
+import { updateApiEvent } from '../../../services'
 
 const schemaEditEvent = yup.object({
   title: yup.string().required(),
@@ -14,26 +14,26 @@ const schemaEditEvent = yup.object({
   end: yup.date().required().min(addHours(new Date(), 1)),
 })
 
-export const CalendarModal = (props: any) => {
+export const CalendarModal = ({ updateData, currentData }: any) => {
   const {
     formState: { errors },
     handleSubmit,
     setValue,
     control,
   } = useForm<InputValuesProps>({
-    defaultValues: props.currentData,
+    defaultValues: currentData,
     resolver: yupResolver(schemaEditEvent),
   })
 
-  setValue('title', props.currentData.title)
-  setValue('notes', props.currentData.notes)
-  setValue('start', props.currentData.start)
-  setValue('end', props.currentData.end)
+  setValue('title', currentData.title)
+  setValue('notes', currentData.notes)
+  setValue('start', currentData.start)
+  setValue('end', currentData.end)
 
   const onSubmit: SubmitHandler<InputValuesProps> = (data) => {
-    data.id = props.currentData.id
-    props.updateData(props.currentData.id, data)
-    updateApiEvent(props.currentData.id, data)
+    data.id = currentData.id
+    updateData(currentData.id, data)
+    updateApiEvent(currentData.id, data)
   }
 
   return (
@@ -47,7 +47,8 @@ export const CalendarModal = (props: any) => {
               defaultValue={new Date()}
               render={({ field }) => (
                 <Box sx={{ marginRight: 10 }}>
-                  <Text
+                  <TextInput
+                    label='Initial date'
                     style={{
                       display: 'inline-block',
                       fontSize: 14,
@@ -55,8 +56,7 @@ export const CalendarModal = (props: any) => {
                       color: '#212529',
                     }}
                   >
-                    Initial date
-                  </Text>
+                  </TextInput>
                   <DatePicker
                     minDate={new Date()}
                     onChange={(e) => field.onChange(e)}
@@ -83,7 +83,8 @@ export const CalendarModal = (props: any) => {
               defaultValue={new Date()}
               render={({ field }) => (
                 <Box sx={{ marginRight: 10 }}>
-                  <Text
+                  <TextInput
+                    label='Final date'
                     style={{
                       display: 'inline-block',
                       fontSize: 14,
@@ -91,8 +92,7 @@ export const CalendarModal = (props: any) => {
                       color: '#212529',
                     }}
                   >
-                    Final date
-                  </Text>
+                  </TextInput>
                   <DatePicker
                     minDate={addHours(new Date(), 1)}
                     onChange={(e) => field.onChange(e)}

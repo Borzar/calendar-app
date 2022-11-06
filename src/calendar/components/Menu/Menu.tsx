@@ -18,6 +18,7 @@ export const Menu = (props: any) => {
         variant='subtle'
         leftIcon={<List />}
         onClick={() => props.setShowCalendar(true)}
+        data-testid='events-button'
       >
         events
       </Button>

@@ -1,25 +1,16 @@
 import { Button, Box, Overlay, Text } from '@mantine/core'
 import { UserCircle } from 'tabler-icons-react'
 import { useEffect, useState } from 'react'
-import { apiCalendar } from '../../services'
 import { useNavigate } from 'react-router-dom'
+import { getNameUser } from '../../../services'
 
 export const MenuTop = () => {
-  const [user, setUser] = useState<string>()
+  const [user, setUser] = useState<string>('loading')
   const navigate = useNavigate()
 
   useEffect(() => {
-    getNameUser()
+    getNameUser(setUser)
   }, [])
-
-  async function getNameUser() {
-    try {
-      const response = await apiCalendar.get('/auth/renew')
-      setUser(response.data.name)
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   const onLogout = () => {
     localStorage.clear()
@@ -38,6 +29,7 @@ export const MenuTop = () => {
           width: '100%',
           height: 55,
         }}
+        data-testid='menu-top'
       >
         <Box
           sx={{ display: 'flex', alignContent: 'center', alignItems: 'center' }}

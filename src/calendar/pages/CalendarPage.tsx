@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { MenuTop, CalendarModal, Menu, CalendarTable } from '../components'
+import { MenuTop } from '../components/MenuTop'
+import { CalendarModal } from '../components/CalendarModal'
+import { Menu } from '../components/Menu'
+import { CalendarTable } from '../components/CalendarTable'
 import { useCalendarEvents } from '../../hooks'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import {
