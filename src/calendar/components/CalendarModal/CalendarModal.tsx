@@ -47,8 +47,7 @@ export const CalendarModal = ({ updateData, currentData }: any) => {
               defaultValue={new Date()}
               render={({ field }) => (
                 <Box sx={{ marginRight: 10 }}>
-                  <TextInput
-                    label='Initial date'
+                  <Text
                     style={{
                       display: 'inline-block',
                       fontSize: 14,
@@ -56,7 +55,8 @@ export const CalendarModal = ({ updateData, currentData }: any) => {
                       color: '#212529',
                     }}
                   >
-                  </TextInput>
+                    Initial date
+                  </Text>
                   <DatePicker
                     minDate={new Date()}
                     onChange={(e) => field.onChange(e)}
@@ -83,8 +83,7 @@ export const CalendarModal = ({ updateData, currentData }: any) => {
               defaultValue={new Date()}
               render={({ field }) => (
                 <Box sx={{ marginRight: 10 }}>
-                  <TextInput
-                    label='Final date'
+                  <Text
                     style={{
                       display: 'inline-block',
                       fontSize: 14,
@@ -92,7 +91,8 @@ export const CalendarModal = ({ updateData, currentData }: any) => {
                       color: '#212529',
                     }}
                   >
-                  </TextInput>
+                    Final date
+                  </Text>
                   <DatePicker
                     minDate={addHours(new Date(), 1)}
                     onChange={(e) => field.onChange(e)}
