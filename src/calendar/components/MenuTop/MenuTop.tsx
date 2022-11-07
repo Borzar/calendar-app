@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { getNameUser } from '../../../services'
 
 export const MenuTop = () => {
-  const [user, setUser] = useState<string>('loading')
+  const [user, setUser] = useState<string>()
   const navigate = useNavigate()
 
   useEffect(() => {
