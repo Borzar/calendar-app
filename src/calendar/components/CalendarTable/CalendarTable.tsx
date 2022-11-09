@@ -1,6 +1,6 @@
 import { Box, Button, Table } from '@mantine/core'
 
-export const CalendarTable = (props: any) => {
+export const CalendarTable = ({ myEvents, editFormValues, deleteEvent }: any) => {
   return (
     <Box mb={39}>
       <Table withBorder striped>
@@ -14,8 +14,8 @@ export const CalendarTable = (props: any) => {
             <th>actions</th>
           </tr>
         </thead>
-        {props.myEvents &&
-          props.myEvents.map((x: any) => (
+        {myEvents &&
+          myEvents.map((x: any) => (
             <tbody key={x.id}>
               <tr>
                 <td>{x.id}</td>
@@ -27,7 +27,7 @@ export const CalendarTable = (props: any) => {
                   <Button
                     variant='outline'
                     sx={{ marginRight: 4 }}
-                    onClick={() => props.editFormValues(x)}
+                    onClick={() => editFormValues(x)}
                   >
                     edit
                   </Button>
@@ -35,7 +35,7 @@ export const CalendarTable = (props: any) => {
                     color='red'
                     variant='outline'
                     sx={{ marginRight: 4 }}
-                    onClick={() => props.deleteEvent(x.id)}
+                    onClick={() => deleteEvent(x.id)}
                   >
                     delete
                   </Button>
