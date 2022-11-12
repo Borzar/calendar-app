@@ -152,8 +152,8 @@ export const CalendarPage = () => {
           }}
         >
           <Box>
-            <Text italic weight={700}>
-              NEW EVENT
+            <Text italic>
+              <h3>NEW EVENT</h3>
             </Text>
           </Box>
           <Box
