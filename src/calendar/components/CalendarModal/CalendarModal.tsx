@@ -39,7 +39,7 @@ export const CalendarModal = ({ updateData, currentData }: any) => {
   return (
     <>
       <Box>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} aria-label='modal-form' >
           <Box>
             <Controller
               name='start'
