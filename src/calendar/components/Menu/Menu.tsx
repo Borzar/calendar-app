@@ -7,7 +7,7 @@ export const Menu = (props: any) => {
       align='flex-start'
       sx={{
         paddingLeft: 20,
-        backgroundColor: '#E7F5FF',
+        backgroundColor: '#F8F0FC',
         width: 200,
         paddingTop: 60,
         opacity: '100%',

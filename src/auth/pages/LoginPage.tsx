@@ -77,7 +77,7 @@ export const LoginPage = () => {
         justifyContent: 'center',
         textAlign: 'center',
         height: '100vh',
-        backgroundColor: '#E7F5FF',
+        backgroundColor: '#F8F0FC',
       }}
     >
       <Box
@@ -85,12 +85,12 @@ export const LoginPage = () => {
           textAlign: 'center',
           border: 'solid',
           borderWidth: 1,
-          borderColor: '#d9d9d9',
+          borderColor: '#662f62',
           borderRadius: 5,
           padding: 30,
           width: 400,
           marginRight: 30,
-          backgroundColor: '#A5D8FF',
+          backgroundColor: '#F3D9FA ',
         }}
       >
         <Text
@@ -155,7 +155,7 @@ export const LoginPage = () => {
               <Box>
                 <TextInput
                   type='password'
-                  placeholder='pasword'
+                  placeholder='password'
                   label='Password'
                   sx={{ paddingBottom: 14, textAlign: 'start' }}
                   {...field}
@@ -168,7 +168,7 @@ export const LoginPage = () => {
               </Box>
             )}
           />
-          <Button variant='gradient' type='submit' sx={{ marginTop: 20 }}>
+          <Button variant='filled' type='submit' sx={{ marginTop: 20, backgroundColor: '#662f62'}}>
             submit
           </Button>
         </form>
@@ -179,12 +179,12 @@ export const LoginPage = () => {
           textAlign: 'center',
           border: 'solid',
           borderWidth: 1,
-          borderColor: '#d9d9d9',
+          borderColor: '#662f62',
           borderRadius: 5,
           padding: 30,
           width: 400,
           marginRight: 30,
-          backgroundColor: '#A5D8FF',
+          backgroundColor: '#F3D9FA',
         }}
       >
         <Text italic weight={800} size='xl' sx={{ marginBottom: 20 }}>
@@ -219,7 +219,7 @@ export const LoginPage = () => {
               <Box>
                 <TextInput
                   type='password'
-                  placeholder='pasword'
+                  placeholder='password'
                   label='Password'
                   sx={{ textAlign: 'start', paddingBottom: 14 }}
                   {...field}
@@ -232,7 +232,7 @@ export const LoginPage = () => {
               </Box>
             )}
           />
-          <Button variant='gradient' type='submit' sx={{ marginTop: 20 }}>
+          <Button variant='filled' type='submit' sx={{ marginTop: 20, backgroundColor: '#662f62'}}>
             submit
           </Button>
         </form>

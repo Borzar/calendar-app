@@ -29,11 +29,12 @@ const eventStyleGetter: any = (
   event: any,
   start: Date,
   end: Date,
-  isSelected: any
+  isSelected: boolean
 ) => {
   const style = {
-    backgroundColor: '#A5D8FF',
-    color: 'black',
+    backgroundColor: '#8f4c85',
+    color: 'white',
+    borderRadius: '1px',
   }
 
   return {
@@ -282,8 +283,8 @@ export const CalendarPage = () => {
                 <Box sx={{ marginTop: 25 }}>
                   <Button
                     sx={{ alignItems: 'center' }}
-                    variant='gradient'
-                    color='black'
+                    variant='outline'
+                    color='violet'
                     type='submit'
                   >
                     Done
@@ -305,7 +306,7 @@ export const CalendarPage = () => {
           events={myEvents}
           startAccessor='start'
           endAccessor='end'
-          style={{ height: 'calc( 70vh - 80px)', marginTop: 50 }}
+          style={{ height: 'calc( 100vh - 90px)', marginTop: 50 }}
           eventPropGetter={eventStyleGetter}
           onDoubleClickEvent={onDoubleClickEvent}
           onView={onViewChange}

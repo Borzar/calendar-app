@@ -24,7 +24,8 @@ export const MenuTop = () => {
         sx={{
           display: 'flex',
           justifyContent: 'flex-end',
-          backgroundColor: '#A5D8FF',
+          backgroundColor: '#662f62',
+          color: 'white',
           position: 'fixed',
           width: '100%',
           height: 55,
@@ -40,9 +41,10 @@ export const MenuTop = () => {
             </Text>
           </Box>
           <Button
-            onClick={onLogout}
+            sx={{ color: 'white', marginRight: '16px' }}
             color='dark'
-            variant='subtle'
+            onClick={onLogout}
+            variant='outline'
             leftIcon={<UserCircle />}
           >
             Logout
