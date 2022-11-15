@@ -2,7 +2,7 @@
   "name": "calendar-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Borzar/github.io/calendar-app",
+  "homepage": "http://Borzar/github.io/calendar-app",
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@hookform/resolvers": "^2.9.9",
