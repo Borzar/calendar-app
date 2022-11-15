@@ -19,9 +19,12 @@ APP_API_URL=http://localhost:4000/api
 
 ## Screenshots
 
-![image](https://user-images.githubusercontent.com/87547769/202019109-8dde981a-133b-4cb0-aeef-a5e37ed46927.png)
+![image](https://user-images.githubusercontent.com/87547769/202022123-2888a8de-1418-4d7d-a6e3-7b45292adf91.png)
 
-![image](https://user-images.githubusercontent.com/87547769/202021433-a6216ebb-745f-466c-a711-eee297bbafdd.png)
+![image](https://user-images.githubusercontent.com/87547769/202021802-51a0f6ad-28d0-4cb3-b153-7838f80ea12b.png)
+
+
+
 
 
 
